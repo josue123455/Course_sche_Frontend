@@ -2,11 +2,11 @@
 
 /* calendar event */
 .calendar_default_event_inner {
-    background: #2e78d6;
+    background: #f0f2f5;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     font-size: 10pt;
-    padding: 5px;
+    padding: 10px;
     opacity: 0.8;
 }
