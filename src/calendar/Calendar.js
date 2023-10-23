@@ -43,7 +43,7 @@ const CalendarComponent = () => {
     {
       id: 1,
       title: "class",
-      start: new Date(2023, 7, 30, 10, 30),
+      start: new Date(2023, 10, 2, 10, 30),
       end: new Date(2023, 7, 30, 13, 0)
     },
     // ... other events
