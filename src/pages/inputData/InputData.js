@@ -1,7 +1,8 @@
 import React from 'react';
-import ButtonComponent from './addprofessorbutton'; // Import the ButtonComponent
-import DeleteprofessorbuttonComponent from './deleteprofessorbutton'; // Import the ButtonComponent
-import UpdateProfessorButtonComponent from './updateprofessorbutton'; // Import the ButtonComponent
+import ButtonComponent from './addprofessorbutton.js';
+import DeleteprofessorbuttonComponent from './deleteprofessorbutton.js';
+import UpdateProfessorButtonComponent from './updateprofessorbutton.js';
+
 
 class InputData extends React.Component {
   render() {
