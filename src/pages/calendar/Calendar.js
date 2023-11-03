@@ -12,10 +12,6 @@ const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
 
-
-
-
-
 //currently toolbar uptop buttons to work the different views
 // Custom toolbar component
 const CustomToolbar = () => {
