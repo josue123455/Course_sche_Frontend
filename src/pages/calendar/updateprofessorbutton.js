@@ -16,16 +16,7 @@ class UpdateProfessorButtonComponent extends React.Component {
     this.setState({ [name]: value });
   };
 
-  // Function to handle form submission (update professor logic)
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic (e.g., sending data to API)
-    // For now, you can simply log the updated professor details
-    console.log('Updating Professor - Name:', this.state.professorName);
-    console.log('Updating Professor - Rank:', this.state.professorRank);
-    // Reset the form and hide it after submission
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
-  };
+
 
   // Function to handle professor update
   handleUpdate = () => {
@@ -62,13 +53,13 @@ class UpdateProfessorButtonComponent extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
-            <button type="submit">Submit</button>
+            {this.state.showForm && (
+          <button onClick={this.handleUpdate}>Update Professor</button>
+        )}
           </form>
         )}
 
-        {this.state.showForm && (
-          <button onClick={this.handleUpdate}>Update Professor</button>
-        )}
+
       </div>
     );
   }

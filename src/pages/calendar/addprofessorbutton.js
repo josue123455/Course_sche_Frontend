@@ -56,7 +56,9 @@ class ButtonComponent extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
-            <button type="submit">Submit</button>
+            {this.state.showForm && (
+          <button onClick={this.handleSubmit}>New Professor</button>
+          )}
           </form>
         )}
       </div>

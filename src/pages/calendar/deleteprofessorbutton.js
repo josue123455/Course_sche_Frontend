@@ -16,16 +16,6 @@ class DeleteprofessorbuttonComponent extends React.Component {
     this.setState({ [name]: value });
   };
 
-  // Function to handle form submission (add professor logic)
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic (e.g., sending data to API)
-    // For now, you can simply log the professor details
-    console.log('Adding Professor - Name:', this.state.professorName);
-    console.log('Adding Professor - Rank:', this.state.professorRank);
-    // Reset the form and hide it after submission
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
-  };
 
   // Function to handle professor deletion
   handleDelete = () => {
@@ -62,12 +52,10 @@ class DeleteprofessorbuttonComponent extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
-            <button type="submit">Submit</button>
-          </form>
-        )}
-
-        {this.state.showForm && (
+            {this.state.showForm && (
           <button onClick={this.handleDelete}>Delete Professor</button>
+        )}
+          </form>
         )}
       </div>
     );
