@@ -1,5 +1,11 @@
 const axios = require('axios');
 
+// *************************
+//
+//  Class Time related functions.
+//
+// *************************
+
 export const createClassTime = async (postData) => {
   try {
     const { status, data } = await axios.post(
@@ -30,6 +36,44 @@ export const getClassTime = async () => {
     return null;
   }
 };
+
+export const updateClassTime = async (id, postData) => {
+  try {
+    const { status, data } = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/classTime/${id}`,
+      postData
+    );
+    if (status === 200) {
+      return data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteClassTime = async (id) => {
+  try {
+    const { status, data } = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/classTime/${id}`
+    );
+    if (status === 200) {
+      return data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+// *************************
+//
+//  Class Schedule related functions.
+//
+// *************************
 
 export const createClassSchedule = async (data) => {
   try {
@@ -62,6 +106,44 @@ export const getClassSchedule = async () => {
   }
 };
 
+export const updateClassSchedule = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/classSchedule/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteClassSchedule = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/classSchedule/${id}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+// *************************
+//
+//  Section related functions.
+//
+// *************************
+
 export const createSectionMode = async (data) => {
   try {
     const response = await axios.post(
@@ -92,6 +174,12 @@ export const getSectionMode = async () => {
     return null;
   }
 };
+
+// *************************
+//
+//  semester related functions.
+//
+// *************************
 
 export const createSemester = async (data) => {
   try {
@@ -124,6 +212,43 @@ export const getSemester = async () => {
   }
 };
 
+export const updateSemester = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/semester/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteSemester = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/semester/${id}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+// *************************
+//
+//  Room related functions.
+//
+// *************************
+
 export const createRoom = async (data) => {
   try {
     const response = await axios.post(
@@ -155,6 +280,43 @@ export const getRoom = async () => {
   }
 };
 
+export const updateRoom = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/room/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteRoom = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/room/${id}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+// *************************
+//
+//  Migration related functions.
+//
+// *************************
+
 export const migrate = async (data) => {
   try {
     const response = await axios.post(
@@ -170,6 +332,12 @@ export const migrate = async (data) => {
     return null;
   }
 };
+
+// *************************
+//
+//  Faculty related functions.
+//
+// *************************
 
 export const createFaculty = async (data) => {
   try {
@@ -202,6 +370,44 @@ export const getFaculty = async () => {
   }
 };
 
+export const updateFaculty = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/faculty/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteFaculty = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/faculty/${id}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+
+// *************************
+// 
+//  Course related functions.
+// 
+// *************************
+
 export const createCourse = async (data) => {
   try {
     const response = await axios.post(
@@ -222,6 +428,37 @@ export const getCourse = async () => {
   try {
     const response = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/course`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const updateCourse = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/course/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+export const deleteCourse = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/course/${id}`
     );
     if (response.status === 200) {
       return response.data;
