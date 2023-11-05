@@ -2,6 +2,12 @@ import React from 'react';
 import ButtonComponent from '../calendar/addprofessorbutton.js';
 import UpdateProfessorButtonComponent from '../calendar/updateprofessorbutton.js';
 import DeleteprofessorbuttonComponent from '../calendar/deleteprofessorbutton.js';
+import Addcoursebutton from '../calendar/addcoursebutton.js';
+import Updatecoursebutton from '../calendar/updatecoursebutton.js';
+import Deletecoursebutton from '../calendar/deletecoursebutton.js';
+import Addroombutton from  '../calendar/addclassroombutton.js';
+import Updateroombutton from '../calendar/updateclassroombutton.js';
+import Deleteroombutton from '../calendar/deleteclassroombutton.js';
 
 
 
@@ -17,6 +23,12 @@ class InputData extends React.Component {
         <ButtonComponent style={buttonStyle} />
         <UpdateProfessorButtonComponent style={buttonStyle} />
         <DeleteprofessorbuttonComponent style={buttonStyle} />
+        <Addcoursebutton style={buttonStyle} />
+        <Updatecoursebutton style={buttonStyle} />
+        <Deletecoursebutton style={buttonStyle} />
+        <Addroombutton style={buttonStyle} />
+        <Updateroombutton style={buttonStyle} />
+        <Deleteroombutton style={buttonStyle} />
 
         {/* You can add more buttons or components here */}
       </div>

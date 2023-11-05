@@ -1,3 +1,11 @@
+//button compnent to add a update professor to the system 
+//checklist 
+//1. create component- done 
+//2. create feilds - done 
+//3. add it to the inputdata.js done
+//4. add logic to for PUT
+
+
 import React from 'react';
 
 class UpdateProfessorButtonComponent extends React.Component {

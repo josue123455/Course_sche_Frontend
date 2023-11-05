@@ -1,8 +1,8 @@
-//button compnent to add a new professor to the system 
+//button compnent to add a new room to the system 
 //checklist 
 //1. create component- done 
 //2. create feilds - done 
-//3. add it to the inputdata.js done
+//3. add it to the inputdata.js - done
 //4. add logic to for PUT
 
 
@@ -11,13 +11,14 @@ import React from 'react';
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class ButtonComponent extends React.Component {
+class Updateroombutton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showForm: false, // State to control form visibility
-      professorName: '',
-      professorRank: ''
+      number: '',
+      building: '',
+      lab: '',
     };
   }
 
@@ -28,45 +29,53 @@ class ButtonComponent extends React.Component {
   };
 
   // Function to handle form submission
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic (e.g., sending data to API)
-    // For now, you can simply log the professor details
-    console.log('Professor Name:', this.state.professorName);
-    console.log('Professor Rank:', this.state.professorRank);
-    // Reset the form and hide it after submission
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
+  handleUpdate = () => {
+    // Handle professor update logic (e.g., send update request to API)
+    //chexk this part out for all fr just keep the line 32 and 38
+    console.log('Updating Room:', this.state.professorName);
+    // Reset the form and hide it after updating
+      // Reset the form and hide it after submission
+    this.setState({ showForm: false, number: '', building: '', lab: '' });
   };
 
   render() {
     return (
       <div className="button-container">
         <button className="big-button" onClick={() => this.setState({ showForm: true })}>
-          New Professor
+          Update Classroom
         </button>
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Professor Name:
+            number:
               <input
                 type="text"
-                name="professorName"
-                value={this.state.professorName}
+                name="number"
+                value={this.state.number}
                 onChange={this.handleInputChange}
               />
             </label>
             <label>
-              Professor Rank:
+              building:
               <input
                 type="text" // remeber to make these required as rommel so they are imported with no issues
-                name="professorRank"
-                value={this.state.professorRank}
+                name="building"
+                value={this.state.building}
+                onChange={this.handleInputChange}
+              />
+            </label>
+            <label>
+                lab:
+              <input
+                type="text" // remeber to make these required as rommel so they are imported with no issues
+                name="lab"
+                value={this.state.lab}
                 onChange={this.handleInputChange}
               />
             </label>
             {this.state.showForm && (
-          <button onClick={this.handleSubmit}>New Professor</button>
+          <button onClick={this.handleUpdate}>Update Classroom</button>
           )}
           </form>
         )}
@@ -75,4 +84,4 @@ class ButtonComponent extends React.Component {
   }
 }
 
-export default ButtonComponent;
+export default Updateroombutton;

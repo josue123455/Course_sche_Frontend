@@ -1,15 +1,15 @@
-//button compnent to add a new course to the system 
+//button compnent to add a update course to the system 
 //checklist 
 //1. create component- done 
 //2. create feilds - done 
-//3. add it to the inputdata.js - done
+//3. add it to the inputdata.js - done 
 //4. add logic to for PUT
 
 
 import React from 'react';
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class Addcoursebutton extends React.Component {
+class Updatecoursebutton extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -28,14 +28,11 @@ class Addcoursebutton extends React.Component {
     };
   
     // Function to handle form submission
-    handleSubmit = (event) => {
-      event.preventDefault();
-      // Handle form submission logic (e.g., sending data to API)
-      // For now, you can simply log the professor details
-      console.log('subject:', this.state.subject);
-      console.log('courseNumber:', this.state.courseNumber);
-      console.log('title:', this.state.title);
-      console.log('description:', this.state.description);
+  // Function to handle professor update
+  handleUpdate = () => {
+    // Handle professor update logic (e.g., send update request to API)
+    console.log('Updating Course:', this.state.professorName);
+    // Reset the form and hide it after updating
       // Reset the form and hide it after submission
       this.setState({ showForm: false, subject: '', courseNumber: '', title: '', description: '' });
     };
@@ -44,7 +41,7 @@ class Addcoursebutton extends React.Component {
       return (
         <div className="button-container">
           <button className="big-button" onClick={() => this.setState({ showForm: true })}>
-            New Course
+            Update Course
           </button>
   
           {this.state.showForm && (
@@ -86,7 +83,7 @@ class Addcoursebutton extends React.Component {
                 />
               </label>
               {this.state.showForm && (
-          <button onClick={this.handleSubmit}>New Course</button>
+          <button onClick={this.handleUpdate}>Update Course</button>
           )}
             </form>
           )}
@@ -95,4 +92,4 @@ class Addcoursebutton extends React.Component {
     }
   }
   
-  export default Addcoursebutton;
+  export default Updatecoursebutton;

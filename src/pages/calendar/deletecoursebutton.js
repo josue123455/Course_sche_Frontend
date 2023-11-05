@@ -1,15 +1,15 @@
-//button compnent to add a new course to the system 
+//button compnent to add a delete course to the system 
 //checklist 
 //1. create component- done 
-//2. create feilds - done 
-//3. add it to the inputdata.js - done
+//2. create feilds - done
+//3. add it to the inputdata.js - 
 //4. add logic to for PUT
 
 
 import React from 'react';
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class Addcoursebutton extends React.Component {
+class Deletecoursebutton extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
@@ -28,15 +28,11 @@ class Addcoursebutton extends React.Component {
     };
   
     // Function to handle form submission
-    handleSubmit = (event) => {
-      event.preventDefault();
-      // Handle form submission logic (e.g., sending data to API)
-      // For now, you can simply log the professor details
-      console.log('subject:', this.state.subject);
-      console.log('courseNumber:', this.state.courseNumber);
-      console.log('title:', this.state.title);
-      console.log('description:', this.state.description);
-      // Reset the form and hide it after submission
+  // Function to handle professor update
+  handleDelete = () => {
+    // Handle professor deletion logic (e.g., send delete request to API)  Handle the API logic here FR
+    console.log('Deleting Professor:', this.state.professorName);
+    // Reset the form and hide it after deletionubmission
       this.setState({ showForm: false, subject: '', courseNumber: '', title: '', description: '' });
     };
   
@@ -44,7 +40,7 @@ class Addcoursebutton extends React.Component {
       return (
         <div className="button-container">
           <button className="big-button" onClick={() => this.setState({ showForm: true })}>
-            New Course
+            Delete Course
           </button>
   
           {this.state.showForm && (
@@ -86,7 +82,7 @@ class Addcoursebutton extends React.Component {
                 />
               </label>
               {this.state.showForm && (
-          <button onClick={this.handleSubmit}>New Course</button>
+          <button onClick={this.handleDelete}>Delete Course</button>
           )}
             </form>
           )}
@@ -95,4 +91,4 @@ class Addcoursebutton extends React.Component {
     }
   }
   
-  export default Addcoursebutton;
+  export default Deletecoursebutton;
