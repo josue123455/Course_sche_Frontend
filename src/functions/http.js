@@ -341,10 +341,15 @@ export const migrate = async (data) => {
 
 export const createFaculty = async (data) => {
   try {
+    console.log(process.env)
+    console.log('url'+   `${process.env.REACT_APP_BACKEND_URL}/faculty`);
     const response = await axios.post(
       `${process.env.REACT_APP_BACKEND_URL}/faculty`,
       data
     );
+    console.log("status: "+ response.status)
+    console.log("data: "+ response.data)
+
     if (response.status === 200) {
       return response.data;
     }
