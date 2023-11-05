@@ -8,6 +8,7 @@
 
 
 import React from 'react';
+const {createFaculty } = require('../../functions/http')
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
@@ -28,12 +29,16 @@ class ButtonComponent extends React.Component {
   };
 
   // Function to handle form submission
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission logic (e.g., sending data to API)
     // For now, you can simply log the professor details
     console.log('Professor Name:', this.state.professorName);
     console.log('Professor Rank:', this.state.professorRank);
+    await createFaculty({
+      name: this.state.professorName,
+      rank: this.state.professorRank
+    })
     // Reset the form and hide it after submission
     this.setState({ showForm: false, professorName: '', professorRank: '' });
   };

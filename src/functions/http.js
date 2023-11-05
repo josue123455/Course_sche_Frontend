@@ -1,4 +1,4 @@
-const axios = require('axios');
+import axios from 'axios';
 
 // *************************
 //
@@ -345,6 +345,7 @@ export const createFaculty = async (data) => {
       `${process.env.REACT_APP_BACKEND_URL}/faculty`,
       data
     );
+
     if (response.status === 200) {
       return response.data;
     }
