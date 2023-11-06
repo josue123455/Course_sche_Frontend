@@ -3,10 +3,11 @@
 //1. create component- done 
 //2. create feilds - done 
 //3. add it to the inputdata.js done
-//4. add logic to for PUT
+//4. add logic to for PUT - 
 
 
 import React from 'react';
+import ProfessorDropdown from './professordropdown.js'; // Replace 'path/to' with the correct path to your ProfessorDropdown component
 
 class UpdateProfessorButtonComponent extends React.Component {
   constructor(props) {
@@ -23,8 +24,6 @@ class UpdateProfessorButtonComponent extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-
-
 
   // Function to handle professor update
   handleUpdate = () => {
@@ -45,12 +44,8 @@ class UpdateProfessorButtonComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label>
               Professor Name:
-              <input
-                type="text"
-                name="professorName"
-                value={this.state.professorName}
-                onChange={this.handleInputChange}
-              />
+              {/* Replace the input field with the ProfessorDropdown component */}
+              <ProfessorDropdown onSelectProfessor={(selectedProfessor) => this.setState({ professorName: selectedProfessor })} />
             </label>
             <label>
               Professor Rank:
@@ -62,15 +57,14 @@ class UpdateProfessorButtonComponent extends React.Component {
               />
             </label>
             {this.state.showForm && (
-          <button onClick={this.handleUpdate}>Update Professor</button>
-        )}
+              <button onClick={this.handleUpdate}>Update Professor</button>
+            )}
           </form>
         )}
-
-
       </div>
     );
   }
 }
 
 export default UpdateProfessorButtonComponent;
+

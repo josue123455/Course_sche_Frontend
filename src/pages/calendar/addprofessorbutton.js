@@ -33,8 +33,6 @@ class ButtonComponent extends React.Component {
     event.preventDefault();
     // Handle form submission logic (e.g., sending data to API)
     // For now, you can simply log the professor details
-    console.log('Professor Name:', this.state.professorName);
-    console.log('Professor Rank:', this.state.professorRank);
     await createFaculty({
       name: this.state.professorName,
       rank: this.state.professorRank
