@@ -15,9 +15,9 @@ class UpdateProfessorButtonComponent extends React.Component {
     super(props);
     this.state = {
       showForm: false, // State to control form visibility
-      professorName: null,
       professorName: '',
-      professorRank: ''
+      professorRank: '', 
+      id : null
     };
   }
 
@@ -27,20 +27,22 @@ class UpdateProfessorButtonComponent extends React.Component {
     this.setState({ [name]: value });
   };
   //function to handle the selcted professor
-  onSelectProfessor = (professorName) => {
-    this.setState({ professorName });
+  onSelectProfessor = (professor) => {
+    this.setState({ professorName: professor.name , professorRank: professor.rank, id: professor._id});
   };
   // Function to handle professor update
   handleUpdate = async (event) => {
     event.preventDefault();
 
     if (this.state.professorName) {
-      await updateFaculty({
-        Name: this.state.professorName, // Pass the selected professor's ID
+      await updateFaculty(
+        this.state.id,
+        {
         name: this.state.professorName,
-        rank: this.state.professorRank
+        rank: this.state.professorRank,
+        _id: this.state.id
       });
-    this.setState({ showForm: false, professorName: '', professorName: '', professorRank: '' });
+    this.setState({ showForm: false, professorName: '', professorRank: '' });
     
 }};
 

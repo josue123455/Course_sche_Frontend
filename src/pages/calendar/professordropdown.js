@@ -22,10 +22,13 @@ const ProfessorDropdown = ({ onSelectProfessor }) => {
   }, []); // Run the effect once when the component mounts
 
   return (
-    <select onChange={(e) => onSelectProfessor(e.target.value)}>
+    <select onChange={(e) => {
+      const selectedProfessor = professors.find((professor) => professor._id === e.target.value);
+      onSelectProfessor(selectedProfessor);
+    }}>
       <option value="">Select Professor</option>
       {professors.map((professor) => (
-        <option key={professor.id} value={professor.name}>
+        <option key={professor._id} value={professor._id}>
           {professor.name}
         </option>
       ))}
