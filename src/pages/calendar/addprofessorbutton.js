@@ -31,8 +31,7 @@ class ButtonComponent extends React.Component {
   // Function to handle form submission
   handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic (e.g., sending data to API)
-    // For now, you can simply log the professor details
+   
     await createFaculty({
       name: this.state.professorName,
       rank: this.state.professorRank

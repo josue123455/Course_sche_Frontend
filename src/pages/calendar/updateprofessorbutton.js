@@ -8,12 +8,14 @@
 
 import React from 'react';
 import ProfessorDropdown from './professordropdown.js'; // Replace 'path/to' with the correct path to your ProfessorDropdown component
+const {updateFaculty } = require('../../functions/http')
 
 class UpdateProfessorButtonComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showForm: false, // State to control form visibility
+      professorName: null,
       professorName: '',
       professorRank: ''
     };
@@ -24,14 +26,23 @@ class UpdateProfessorButtonComponent extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-
-  // Function to handle professor update
-  handleUpdate = () => {
-    // Handle professor update logic (e.g., send update request to API)
-    console.log('Updating Professor:', this.state.professorName);
-    // Reset the form and hide it after updating
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
+  //function to handle the selcted professor
+  onSelectProfessor = (professorName) => {
+    this.setState({ professorName });
   };
+  // Function to handle professor update
+  handleUpdate = async (event) => {
+    event.preventDefault();
+
+    if (this.state.professorName) {
+      await updateFaculty({
+        Name: this.state.professorName, // Pass the selected professor's ID
+        name: this.state.professorName,
+        rank: this.state.professorRank
+      });
+    this.setState({ showForm: false, professorName: '', professorName: '', professorRank: '' });
+    
+}};
 
   render() {
     return (
@@ -43,12 +54,22 @@ class UpdateProfessorButtonComponent extends React.Component {
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Professor Name:
+              Select Professor:
               {/* Replace the input field with the ProfessorDropdown component */}
-              <ProfessorDropdown onSelectProfessor={(selectedProfessor) => this.setState({ professorName: selectedProfessor })} />
+              <ProfessorDropdown onSelectProfessor={this.onSelectProfessor} />
+
             </label>
             <label>
-              Professor Rank:
+              Update Professor Name:
+              <input
+                type="text"
+                name="professorName"
+                value={this.state.professorName}
+                onChange={this.handleInputChange}
+              />
+            </label>
+            <label>
+              Update Professor Rank:
               <input
                 type="text"
                 name="professorRank"
@@ -56,6 +77,7 @@ class UpdateProfessorButtonComponent extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
+            
             {this.state.showForm && (
               <button onClick={this.handleUpdate}>Update Professor</button>
             )}
