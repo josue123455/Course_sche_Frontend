@@ -7,6 +7,7 @@
 
 
 import React from 'react';
+const {createCourse } = require('../../functions/http')
 
 //using the state button when the button is not clicked the state does not show the text boxes
 class Addcoursebutton extends React.Component {
@@ -14,9 +15,9 @@ class Addcoursebutton extends React.Component {
       super(props);
       this.state = {
         showForm: false, // State to control form visibility
-        subject: '',
         courseNumber: '',
         title: '',
+        subject: '',
         description: ''
       };
     }
@@ -28,15 +29,18 @@ class Addcoursebutton extends React.Component {
     };
   
     // Function to handle form submission
-    handleSubmit = (event) => {
-      event.preventDefault();
-      // Handle form submission logic (e.g., sending data to API)
-      // For now, you can simply log the professor details
-      console.log('subject:', this.state.subject);
-      console.log('courseNumber:', this.state.courseNumber);
-      console.log('title:', this.state.title);
-      console.log('description:', this.state.description);
-      // Reset the form and hide it after submission
+
+
+      handleSubmit = async (event) => {
+        event.preventDefault();
+       
+        await createCourse({
+          courseNumber: this.state.courseNumber,
+          title: this.state.title,
+          subject: this.state.subject,
+          description: this.state.description
+
+        })
       this.setState({ showForm: false, subject: '', courseNumber: '', title: '', description: '' });
     };
   
@@ -50,25 +54,16 @@ class Addcoursebutton extends React.Component {
           {this.state.showForm && (
             <form onSubmit={this.handleSubmit}>
               <label>
-                subject:
+              courseNumber:
                 <input
                   type="text"
-                  name="subject"
-                  value={this.state.subject}
-                  onChange={this.handleInputChange}
-                />
-              </label>
-              <label>
-                courseNumber:
-                <input
-                  type="text" // remeber to make these required as rommel so they are imported with no issues
                   name="courseNumber"
                   value={this.state.courseNumber}
                   onChange={this.handleInputChange}
                 />
               </label>
               <label>
-                title:
+              title:
                 <input
                   type="text" // remeber to make these required as rommel so they are imported with no issues
                   name="title"
@@ -77,10 +72,19 @@ class Addcoursebutton extends React.Component {
                 />
               </label>
               <label>
+              subject:
+                <input
+                  type="text" // remeber to make these required as rommel so they are imported with no issues
+                  name="subject"
+                  value={this.state.subject}
+                  onChange={this.handleInputChange}
+                />
+              </label>
+              <label>
                 description:
                 <input
                   type="text" // remeber to make these required as rommel so they are imported with no issues
-                  name="professorRank"
+                  name="description"
                   value={this.state.description}
                   onChange={this.handleInputChange}
                 />
