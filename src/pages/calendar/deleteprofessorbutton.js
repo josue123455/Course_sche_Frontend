@@ -7,6 +7,8 @@
 
 
 import React from 'react';
+import ProfessorDropdown from './professordropdown';
+const {deleteFaculty } = require('../../functions/http')
 
 class DeleteprofessorbuttonComponent extends React.Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class DeleteprofessorbuttonComponent extends React.Component {
     this.state = {
       showForm: false, // State to control form visibility
       professorName: '',
-      professorRank: ''
+      professorRank: '', 
+      id : null
     };
   }
 
@@ -24,14 +27,23 @@ class DeleteprofessorbuttonComponent extends React.Component {
     this.setState({ [name]: value });
   };
 
-
-  // Function to handle professor deletion
-  handleDelete = () => {
-    // Handle professor deletion logic (e.g., send delete request to API)  Handle the API logic here FR
-    console.log('Deleting Professor:', this.state.professorName);
-    // Reset the form and hide it after deletion
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
+  onSelectProfessor = (professor) => {
+    this.setState({ professorName: professor.name , professorRank: professor.rank, id: professor._id});
   };
+  // Function to handle professor deletion
+  handleDelete = async (event) => {
+    event.preventDefault();
+
+     if (this.state.professorName) {
+      await deleteFaculty(
+        this.state.id,
+        {
+        name: this.state.professorName,
+        rank: this.state.professorRank,
+        _id: this.state.id
+      });
+    this.setState({ showForm: false, professorName: '', professorRank: '' });
+  }};
 
   render() {
     return (
@@ -43,7 +55,13 @@ class DeleteprofessorbuttonComponent extends React.Component {
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
             <label>
-              Professor Name:
+              Select Professor:
+              {/* Replace the input field with the ProfessorDropdown component */}
+              <ProfessorDropdown onSelectProfessor={this.onSelectProfessor} />
+
+            </label>
+            <label>
+              Delete Professor Name:
               <input
                 type="text"
                 name="professorName"
@@ -52,7 +70,7 @@ class DeleteprofessorbuttonComponent extends React.Component {
               />
             </label>
             <label>
-              Professor Rank:
+              Delete Professor Rank:
               <input
                 type="text"
                 name="professorRank"
@@ -60,9 +78,10 @@ class DeleteprofessorbuttonComponent extends React.Component {
                 onChange={this.handleInputChange}
               />
             </label>
+            
             {this.state.showForm && (
-          <button onClick={this.handleDelete}>Delete Professor</button>
-        )}
+              <button onClick={this.handleDelete}>Delete Professor</button>
+            )}
           </form>
         )}
       </div>
