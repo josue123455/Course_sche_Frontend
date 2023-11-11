@@ -8,7 +8,7 @@ import Deletecoursebutton from '../calendar/deletecoursebutton.js';
 import Addroombutton from  '../calendar/addclassroombutton.js';
 import Updateroombutton from '../calendar/updateclassroombutton.js';
 import Deleteroombutton from '../calendar/deleteclassroombutton.js';
-
+import AddSectionbutton from '../calendar/addSectionButton.js';
 
 
 class InputData extends React.Component {
@@ -29,6 +29,7 @@ class InputData extends React.Component {
         <Addroombutton style={buttonStyle} />
         <Updateroombutton style={buttonStyle} />
         <Deleteroombutton style={buttonStyle} />
+        <AddSectionbutton style={buttonStyle} />
 
         {/* You can add more buttons or components here */}
       </div>
