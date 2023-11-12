@@ -72,47 +72,44 @@ class UpdateCourseButtonComponent extends React.Component {
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
-            <label>
-              Select Course:
-              {/* Replace the input field with the CoursenumberDropdown component */}
-              <CoursenumberDropdown onSelectCourse={this.onSelectCourse} />
-            </label>
-            <label>
-              Update Course Number:
-              <input
-                type="text"
-                name="courseNumber"
-                value={this.state.courseNumber}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              Update Course Title:
-              <input
-                type="text"
-                name="title"
-                value={this.state.title}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              Update Course Subject:
-              <input
-                type="text"
-                name="description"
-                value={this.state.description}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              Update Course Description:
-              <input
-                type="text"
-                name="subject"
-                value={this.state.subject}
-                onChange={this.handleInputChange}
-              />
-            </label>
+            <label htmlFor='selectedCourse' className='form-label'>Select Course:</label> 
+            <CoursenumberDropdown onSelectCourse={this.onSelectCourse} />
+            <label htmlFor='courseNumber' className='form-label'>Update Course Number:            </label>
+            <input
+              type="text"
+              name="courseNumber"
+              id="courseNumber"
+              className="form-control"
+              value={this.state.courseNumber}
+              onChange={this.handleInputChange}
+            />
+            <label htmlFor='title' className='form-label'>Update Course Title:</label>
+            <input
+              type="text"
+              name="title"
+              id="title"
+              className='form-control'
+              value={this.state.title}
+              onChange={this.handleInputChange}
+            />
+            <label htmlFor='subject' className='form-label'>Update Course Subject:</label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              className='form-control'
+              value={this.state.description}
+              onChange={this.handleInputChange}
+            />
+            <label htmlFor='subject' className='form-label'>Update Course Description:</label>
+            <input
+              type="text"
+              name="subject"
+              id="subject"
+              className='form-control'
+              value={this.state.subject}
+              onChange={this.handleInputChange}
+            />
 
             {this.state.showForm && <button className='btn btn-primary' onClick={this.handleUpdate}>Update Course</button>}
           </form>

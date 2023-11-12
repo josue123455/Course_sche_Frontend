@@ -1,6 +1,7 @@
 import React from 'react';
 import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown';
+import RoomDropdown from './roomdropdown';
 const { createFaculty } = require('../../functions/http')
 
 
@@ -61,10 +62,7 @@ class ButtonComponent extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='courseNumberSelect' className="form-label">Course:</label>
-                            <CoursenumberDropdown onSelectCourse={(selectedCourse) => {
-                                this.setState({ course: selectedCourse })
-                            }}
-                            />
+                            <CoursenumberDropdown onSelectCourse={(selectedCourse) => { this.setState({ course: selectedCourse }) }} />
                         </div>
 
                         <div className="form-group">
@@ -82,10 +80,7 @@ class ButtonComponent extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='professorSelect' className="form-label">Instructor:</label>
-                            <ProfessorDropdown onSelectProfessor={(selectedProfessor) => {
-                                this.setState({ instructor: selectedProfessor })
-                            }}
-                            />
+                            <ProfessorDropdown onSelectProfessor={(selectedProfessor) => { this.setState({ instructor: selectedProfessor }) }} />
                         </div>
 
                         <div className="form-group">
@@ -141,15 +136,7 @@ class ButtonComponent extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='room' className="form-label">Room:</label>
-                            <input
-                                type="text"
-                                name="room"
-                                id='room'
-                                className='form-control'
-                                value={this.state.room}
-                                onChange={this.handleInputChange}
-                                required
-                            />
+                            <RoomDropdown onSelectRoom={(selectedRoom) => { this.setState({ room: selectedRoom }) }} />
                         </div>
 
                         <button type="submit" className="btn btn-primary">Submit</button>

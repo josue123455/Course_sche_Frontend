@@ -87,6 +87,7 @@ class Addcoursebutton extends React.Component {
                 className='form-control'
                 value={this.state.subject}
                 onChange={this.handleInputChange}
+                required
               />
             </div>
             <div className="form-group">
@@ -98,6 +99,7 @@ class Addcoursebutton extends React.Component {
                 className='form-control'
                 value={this.state.description}
                 onChange={this.handleInputChange}
+                required
               />
             </div>
             {this.state.showForm && (
