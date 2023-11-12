@@ -39,7 +39,7 @@ class Deleteroombutton extends React.Component {
   render() {
     return (
       <div className="button-container">
-        <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>
+        <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Classroom
         </button>
 

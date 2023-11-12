@@ -1,17 +1,6 @@
-//button compnent to add a new section to the system 
-//checklist 
-//1. create component- done 
-//2. create feilds - done 
-//3. add it to the inputdata.js done
-//4. add logic to for PUT
-
-
-
 import React from 'react';
 const { createFaculty } = require('../../functions/http')
 
-
-//using the state button when the button is not clicked the state does not show the text boxes
 class ButtonComponent extends React.Component {
     constructor(props) {
         super(props);
@@ -50,7 +39,7 @@ class ButtonComponent extends React.Component {
     render() {
         return (
             <div className="button-container">
-                <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>New section</button>
+                <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>New section</button>
 
                 {this.state.showForm && (
                     <form onSubmit={this.handleSubmit}>
