@@ -48,7 +48,7 @@ class DeleteprofessorbuttonComponent extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className='btn btn-danger' onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Professor
         </button>
 
@@ -80,7 +80,7 @@ class DeleteprofessorbuttonComponent extends React.Component {
             </label>
             
             {this.state.showForm && (
-              <button className='btn btn-primary' onClick={this.handleDelete}>Delete Professor</button>
+              <button className='btn btn-danger' onClick={this.handleDelete}>Delete Professor</button>
             )}
           </form>
         )}

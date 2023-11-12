@@ -47,7 +47,7 @@ class Addcoursebutton extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className="btn btn-dark"onClick={() => this.setState({ showForm: !this.state.showForm })}>
           New Course
         </button>
 

@@ -13,7 +13,7 @@ import {updateRoom } from '../../functions/http'; // Import the Createroom metho
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class Addroombutton extends React.Component {
+class AddroombUpdateroom extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -51,9 +51,9 @@ class Addroombutton extends React.Component {
     });
     this.setState({ showForm: false, number: '', building: '', lab: '' });
 
-  
+    }
   };
-}
+
 
   render() {
     return (
@@ -106,4 +106,4 @@ class Addroombutton extends React.Component {
   }
 }
 
-export default Addroombutton;
+export default AddroombUpdateroom;

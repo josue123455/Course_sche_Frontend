@@ -66,7 +66,7 @@ class UpdateCourseButtonComponent extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className='btn btn-danger'onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Course
         </button>
 
@@ -114,7 +114,8 @@ class UpdateCourseButtonComponent extends React.Component {
               />
             </label>
 
-            {this.state.showForm && <button className='btn btn-primary' onClick={this.handleDelete}>Delete Course</button>}
+            {this.state.showForm && 
+            <button className='btn btn-danger' onClick={this.handleDelete}>Delete Course</button>}
           </form>
         )}
       </div>
@@ -123,3 +124,4 @@ class UpdateCourseButtonComponent extends React.Component {
 }
 
 export default UpdateCourseButtonComponent;
+

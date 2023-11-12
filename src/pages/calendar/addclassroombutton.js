@@ -8,6 +8,7 @@
 
 
 import React from 'react';
+const {createRoom } = require('../../functions/http')
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
@@ -29,15 +30,24 @@ class Addroombutton extends React.Component {
   };
 
   // Function to handle form submission
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic (e.g., sending data to API)
-    // For now, you can simply log the professor details
-    console.log('number:', this.state.number);
-    console.log('building:', this.state.building);
-    console.log('lab:', this.state.lab);
-    // Reset the form and hide it after submission
+   
+    await createRoom({
+      number: this.state.number,
+      building: this.state.building,
+      lab: this.state.lab,
+
+    });
     this.setState({ showForm: false, number: '', building: '', lab: '' });
+  }; catch (error) {
+    if (error.response && error.response.status === 500) {
+      console.error('Duplicate room number. Please choose a different room number.');
+      // Handle the error gracefully, e.g., show a message to the user.
+    } else {
+      console.error('An unexpected error occurred:', error.message);
+    }
+  
   };
 
   render() {
@@ -61,7 +71,7 @@ class Addroombutton extends React.Component {
             <label>
               building:
               <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
+                type="text"
                 name="building"
                 value={this.state.building}
                 onChange={this.handleInputChange}
@@ -70,14 +80,14 @@ class Addroombutton extends React.Component {
             <label>
               lab:
               <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
+                type="text"
                 name="lab"
                 value={this.state.lab}
                 onChange={this.handleInputChange}
               />
             </label>
             {this.state.showForm && (
-              <button className='btn btn-primary' onClick={this.handleSubmit} >New Classroom</button>
+              <button className='btn btn-primary' onClick={this.handleSubmit}>New Classroom</button>
             )}
           </form>
         )}

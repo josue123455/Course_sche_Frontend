@@ -1,79 +1,93 @@
-//button compnent to add a new room to the system 
-//checklist 
-//1. create component- done 
-//2. create feilds - done 
-//3. add it to the inputdata.js - done
-//4. add logic to for PUT
-
-
-
 import React from 'react';
+import RoomDropdown from './roomdropdown';
+import { deleteRoom } from '../../functions/http';
 
-
-//using the state button when the button is not clicked the state does not show the text boxes
-class Deleteroombutton extends React.Component {
+class DeleteClassroomButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showForm: false, // State to control form visibility
+      showForm: false,
       number: '',
       building: '',
       lab: '',
+      _id: null,
     };
   }
 
-  // Function to handle form input changes
   handleInputChange = (event) => {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
 
-  // Function to handle form submission
-  handleDelete = () => {
-    // Handle professor deletion logic (e.g., send delete request to API)  Handle the API logic here FR
-    console.log('Deleting clasroom', this.state.professorName);
-    // Reset the form and hide it after deletion
-    this.setState({ showForm: false, number: '', building: '', lab: '' });
+  onSelectRoom = (selectedRoom) => {
+    this.setState({
+      number: selectedRoom.number,
+      building: selectedRoom.building,
+      lab: selectedRoom.lab,
+      _id: selectedRoom._id,
+    });
+  };
+
+  handleDelete = async (event) => {
+    event.preventDefault();
+
+    if (this.state._id) {
+      await deleteRoom(this.state._id);
+      this.setState({
+        showForm: false,
+        number: '',
+        building: '',
+        lab: '',
+        _id: null,
+      });
+    }
   };
 
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className="btn btn-danger" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Classroom
         </button>
 
         {this.state.showForm && (
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleDelete}>
             <label>
-              number:
+              Select Room:
+              <RoomDropdown onSelectRoom={this.onSelectRoom} />
+            </label>
+            <label>
+              Room Number:
               <input
                 type="text"
                 name="number"
                 value={this.state.number}
                 onChange={this.handleInputChange}
+                readOnly
               />
             </label>
             <label>
-              building:
+              Building:
               <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
+                type="text"
                 name="building"
                 value={this.state.building}
                 onChange={this.handleInputChange}
+                readOnly
               />
             </label>
             <label>
-              lab:
+              Lab:
               <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
+                type="text"
                 name="lab"
                 value={this.state.lab}
                 onChange={this.handleInputChange}
+                readOnly
               />
             </label>
             {this.state.showForm && (
-              <button className='btn btn-primary' onClick={this.handleDelete}>Delete Classroom</button>
+              <button className='btn btn-danger' onClick={this.handleDelete}>Confirm Delete</button>
             )}
           </form>
         )}
@@ -82,4 +96,4 @@ class Deleteroombutton extends React.Component {
   }
 }
 
-export default Deleteroombutton;
+export default DeleteClassroomButton;
