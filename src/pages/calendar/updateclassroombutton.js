@@ -35,7 +35,7 @@ class Addroombutton extends React.Component {
       number: selectedRoom.number,
       building: selectedRoom.building,
       lab: selectedRoom.lab,
-    
+      _id: selectedRoom._id,    
     });
   };
   // Function to handle form submission
@@ -43,13 +43,11 @@ class Addroombutton extends React.Component {
     event.preventDefault();
 
     if (this.state.number && this.state.building && this.state.lab) {
-    await updateRoom({
+    await updateRoom(this.state._id, {
       number: this.state.number,
       building: this.state.building,
       lab: this.state.lab,
       _id: this.state._id,
-
-
     });
     this.setState({ showForm: false, number: '', building: '', lab: '' });
 
