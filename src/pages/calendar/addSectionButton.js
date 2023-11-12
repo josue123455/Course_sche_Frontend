@@ -1,5 +1,8 @@
 import React from 'react';
+import ProfessorDropdown from './professordropdown';
+import CoursenumberDropdown from './coursenumberdropdown';
 const { createFaculty } = require('../../functions/http')
+
 
 class ButtonComponent extends React.Component {
     constructor(props) {
@@ -57,15 +60,10 @@ class ButtonComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor='course' className="form-label">Course:</label>
-                            <input
-                                type="text"
-                                name="course"
-                                id='course'
-                                className='form-control'
-                                value={this.state.sectionRank}
-                                onChange={this.handleInputChange}
-                                required
+                            <label htmlFor='courseNumberSelect' className="form-label">Course:</label>
+                            <CoursenumberDropdown onSelectCourse={(selectedCourse) => {
+                                this.setState({ course: selectedCourse })
+                            }}
                             />
                         </div>
 
@@ -83,15 +81,10 @@ class ButtonComponent extends React.Component {
                         </div>
 
                         <div className="form-group">
-                            <label htmlFor='instructor' className="form-label">Instructor:</label>
-                            <input
-                                type="text"
-                                name="instructor"
-                                id='instructor'
-                                className='form-control'
-                                value={this.state.instructor}
-                                onChange={this.handleInputChange}
-                                required
+                            <label htmlFor='professorSelect' className="form-label">Instructor:</label>
+                            <ProfessorDropdown onSelectProfessor={(selectedProfessor) => {
+                                this.setState({ instructor: selectedProfessor })
+                            }}
                             />
                         </div>
 

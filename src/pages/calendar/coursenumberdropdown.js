@@ -23,13 +23,16 @@ const CoursenumberDropdown = ({ onSelectCourse }) => {
 
   return (
     <select
-      style={{ minHeight: '10px', color: 'black' }} // Example styles, adjust as needed
+      id='courseNumberSelect'
+      className='form-control'
       onChange={(e) => {
         const selectedCourse = courses.find((course) => course._id === e.target.value);
         onSelectCourse(selectedCourse);
       }}
+      required
     >
-      <option value="">Select Course</option>
+      <option disabled selected value="">Select Course</option>
+
       {courses.map((course) => (
         <option key={course._id} value={course._id}>
           {course.courseNumber}

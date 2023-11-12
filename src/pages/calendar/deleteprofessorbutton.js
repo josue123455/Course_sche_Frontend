@@ -7,7 +7,7 @@
 
 
 import React from 'react';
-import ProfessorDropdown from './professordropdown';
+  import ProfessorDropdown from './professordropdown';
 const {deleteFaculty } = require('../../functions/http')
 
 class DeleteprofessorbuttonComponent extends React.Component {
