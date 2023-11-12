@@ -66,7 +66,7 @@ class UpdateCourseButtonComponent extends React.Component {
   render() {
     return (
       <div className="button-container">
-        <button className="big-button" onClick={() => this.setState({ showForm: true })}>
+        <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>
           Update Course
         </button>
 

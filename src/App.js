@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Calendar from './pages/calendar/Calendar';
 import InputData from './pages/inputData/InputData';
 const http = require('./functions/http');

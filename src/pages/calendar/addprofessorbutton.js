@@ -12,7 +12,7 @@ const {createFaculty } = require('../../functions/http')
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class ButtonComponent extends React.Component {
+class AddProfessorButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,7 +43,7 @@ class ButtonComponent extends React.Component {
   render() {
     return (
       <div className="button-container">
-        <button className="big-button" onClick={() => this.setState({ showForm: true })}>
+        <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>
           New Professor
         </button>
 
@@ -77,4 +77,4 @@ class ButtonComponent extends React.Component {
   }
 }
 
-export default ButtonComponent;
+export default AddProfessorButton;
