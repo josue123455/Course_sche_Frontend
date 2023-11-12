@@ -46,46 +46,48 @@ class DeleteClassroomButton extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-danger" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Classroom
         </button>
 
         {this.state.showForm && (
           <form onSubmit={this.handleDelete}>
-            <label>
-              Select Room:
-              <RoomDropdown onSelectRoom={this.onSelectRoom} />
-            </label>
-            <label>
-              Room Number:
-              <input
-                type="text"
-                name="number"
-                value={this.state.number}
-                onChange={this.handleInputChange}
-                readOnly
-              />
-            </label>
-            <label>
-              Building:
-              <input
-                type="text"
-                name="building"
-                value={this.state.building}
-                onChange={this.handleInputChange}
-                readOnly
-              />
-            </label>
-            <label>
-              Lab:
-              <input
-                type="text"
-                name="lab"
-                value={this.state.lab}
-                onChange={this.handleInputChange}
-                readOnly
-              />
-            </label>
+
+            <label htmlFor='selectedRoom' className='form-label'>Select Room:</label>
+            <RoomDropdown onSelectRoom={this.onSelectRoom} />
+
+            <label htmlFor='number' className='form-label'>Room Number:</label>
+            <input
+              type="text"
+              name="number"
+              id="number"
+              className='form-control'
+              value={this.state.number}
+              onChange={this.handleInputChange}
+              readOnly
+            />
+
+            <label htmlFor='building' className='form-label'>Building:</label>
+            <input
+              type="text"
+              name="building"
+              id="building"
+              className='form-control'
+              value={this.state.building}
+              onChange={this.handleInputChange}
+              readOnly
+            />
+
+            <label htmlFor='lab' className='form-label'>Lab:</label>
+            <input
+              type="text"
+              name="lab"
+              id="lab"
+              className='form-control'
+              value={this.state.lab}
+              onChange={this.handleInputChange}
+              readOnly
+            />
             {this.state.showForm && (
               <button className='btn btn-danger' onClick={this.handleDelete}>Confirm Delete</button>
             )}

@@ -9,7 +9,7 @@
 
 import React from 'react';
 import RoomDropdown from './roomdropdown'; // importing the room dropdown
-import {updateRoom } from '../../functions/http'; // Import the Createroom method
+import { updateRoom } from '../../functions/http'; // Import the Createroom method
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
@@ -35,7 +35,7 @@ class AddroombUpdateroom extends React.Component {
       number: selectedRoom.number,
       building: selectedRoom.building,
       lab: selectedRoom.lab,
-      _id: selectedRoom._id,    
+      _id: selectedRoom._id,
     });
   };
   // Function to handle form submission
@@ -43,13 +43,13 @@ class AddroombUpdateroom extends React.Component {
     event.preventDefault();
 
     if (this.state.number && this.state.building && this.state.lab) {
-    await updateRoom(this.state._id, {
-      number: this.state.number,
-      building: this.state.building,
-      lab: this.state.lab,
-      _id: this.state._id,
-    });
-    this.setState({ showForm: false, number: '', building: '', lab: '' });
+      await updateRoom(this.state._id, {
+        number: this.state.number,
+        building: this.state.building,
+        lab: this.state.lab,
+        _id: this.state._id,
+      });
+      this.setState({ showForm: false, number: '', building: '', lab: '' });
 
     }
   };
@@ -64,41 +64,42 @@ class AddroombUpdateroom extends React.Component {
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
-          <label>
-              Select Room:
-              {/* Replace the input field with the CoursenumberDropdown component */}
-              <RoomDropdown onSelectRoom={this.onSelectRoom} />
-            </label>
-            <label>
-              number:
-              <input
-                type="text"
-                name="number"
-                value={this.state.number}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              building:
-              <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
-                name="building"
-                value={this.state.building}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              lab:
-              <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
-                name="lab"
-                value={this.state.lab}
-                onChange={this.handleInputChange}
-              />
-            </label>
+            <label htmlFor="selectedRoom" className="form-label">Select Room:</label>
+            <RoomDropdown onSelectRoom={this.onSelectRoom} />
+
+            <label htmlFor="number" className="form-label">number:</label>
+            <input
+              type="text"
+              name="number"
+              id="number"
+              className="form-control"
+              value={this.state.number}
+              onChange={this.handleInputChange}
+            />
+
+            <label htmlFor="building" className="form-label">building:</label>
+            <input
+              type="text" // remeber to make these required as rommel so they are imported with no issues
+              name="building"
+              id="building"
+              className="form-control"
+              value={this.state.building}
+              onChange={this.handleInputChange}
+            />
+
+
+            <label htmlFor="lab" className="form-label">lab:</label>
+            <input
+              type="text" // remeber to make these required as rommel so they are imported with no issues
+              name="lab"
+              id="lab"
+              className="form-control"
+              value={this.state.lab}
+              onChange={this.handleInputChange}
+            />
             {this.state.showForm && (
-          <button onClick={this.handleUpdate}>Update Classroom</button>
-          )}
+              <button className="btn btn-primary" onClick={this.handleUpdate}>Update Classroom</button>
+            )}
           </form>
         )}
       </div>

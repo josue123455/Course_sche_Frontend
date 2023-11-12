@@ -8,7 +8,7 @@
 
 
 import React from 'react';
-const {createRoom } = require('../../functions/http')
+const { createRoom } = require('../../functions/http')
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
@@ -32,7 +32,7 @@ class Addroombutton extends React.Component {
   // Function to handle form submission
   handleSubmit = async (event) => {
     event.preventDefault();
-   
+
     await createRoom({
       number: this.state.number,
       building: this.state.building,
@@ -40,14 +40,14 @@ class Addroombutton extends React.Component {
 
     });
     this.setState({ showForm: false, number: '', building: '', lab: '' });
-  }; catch (error) {
+  }; catch(error) {
     if (error.response && error.response.status === 500) {
       console.error('Duplicate room number. Please choose a different room number.');
       // Handle the error gracefully, e.g., show a message to the user.
     } else {
       console.error('An unexpected error occurred:', error.message);
     }
-  
+
   };
 
   render() {
@@ -59,33 +59,38 @@ class Addroombutton extends React.Component {
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
-            <label>
+            <label
+              htmlFor="number"
+              className='form-label'
+            >
               number:
-              <input
-                type="text"
-                name="number"
-                value={this.state.number}
-                onChange={this.handleInputChange}
-              />
             </label>
-            <label>
-              building:
-              <input
-                type="text"
-                name="building"
-                value={this.state.building}
-                onChange={this.handleInputChange}
-              />
-            </label>
-            <label>
-              lab:
-              <input
-                type="text"
-                name="lab"
-                value={this.state.lab}
-                onChange={this.handleInputChange}
-              />
-            </label>
+            <input
+              type="text"
+              name="number"
+              id="number"
+              className='form-control'
+              value={this.state.number}
+              onChange={this.handleInputChange}
+            />
+            <label htmlFor='building' className='form-label'>building:</label>
+            <input
+              type="text"
+              name="building"
+              id='building'
+              className='form-control'
+              value={this.state.building}
+              onChange={this.handleInputChange}
+            />
+            <label htmlFor='lab' className='form-label'>lab:</label>
+            <input
+              type="text"
+              name="lab"
+              id='lab'
+              className='form-control'
+              value={this.state.lab}
+              onChange={this.handleInputChange}
+            />
             {this.state.showForm && (
               <button className='btn btn-primary' onClick={this.handleSubmit}>New Classroom</button>
             )}
