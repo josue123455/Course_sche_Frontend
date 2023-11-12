@@ -8,7 +8,7 @@
 
 
 import React from 'react';
-const {createFaculty } = require('../../functions/http')
+const { createFaculty } = require('../../functions/http')
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
@@ -31,7 +31,7 @@ class AddProfessorButton extends React.Component {
   // Function to handle form submission
   handleSubmit = async (event) => {
     event.preventDefault();
-   
+
     await createFaculty({
       name: this.state.professorName,
       rank: this.state.professorRank
@@ -42,34 +42,39 @@ class AddProfessorButton extends React.Component {
 
   render() {
     return (
-      <div className="button-container">
-        <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>
-          New Professor
-        </button>
+      <div className="button-container card-body">
+        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>New Professor</button>
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
-            <label>
-              Professor Name:
+            <div className="form-group">
+              <label htmlFor="professorName" className="form-label">Professor Name:</label>
               <input
                 type="text"
                 name="professorName"
+                id='professorName'
+                className='form-control'
                 value={this.state.professorName}
                 onChange={this.handleInputChange}
+                required
               />
-            </label>
-            <label>
-              Professor Rank:
+            </div>
+
+            <div className="form-group">
+              <label htmlFor='professorRank' className='form-label' >Professor Rank:</label>
               <input
-                type="text" // remeber to make these required as rommel so they are imported with no issues
+                type="text"
                 name="professorRank"
+                id='professorRank'
+                className='form-control'
                 value={this.state.professorRank}
                 onChange={this.handleInputChange}
+                required
               />
-            </label>
+            </div>
             {this.state.showForm && (
-          <button onClick={this.handleSubmit}>New Professor</button>
-          )}
+              <button className='btn btn-primary' onClick={this.handleSubmit}>Save Professor</button>
+            )}
           </form>
         )}
       </div>

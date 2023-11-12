@@ -38,15 +38,15 @@ class Deleteroombutton extends React.Component {
 
   render() {
     return (
-      <div className="button-container">
-        <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+      <div className="button-container card-body">
+        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           Delete Classroom
         </button>
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
             <label>
-            number:
+              number:
               <input
                 type="text"
                 name="number"
@@ -64,7 +64,7 @@ class Deleteroombutton extends React.Component {
               />
             </label>
             <label>
-                lab:
+              lab:
               <input
                 type="text" // remeber to make these required as rommel so they are imported with no issues
                 name="lab"
@@ -73,8 +73,8 @@ class Deleteroombutton extends React.Component {
               />
             </label>
             {this.state.showForm && (
-          <button onClick={this.handleDelete}>Delete Classroom</button>
-          )}
+              <button className='btn btn-primary' onClick={this.handleDelete}>Delete Classroom</button>
+            )}
           </form>
         )}
       </div>

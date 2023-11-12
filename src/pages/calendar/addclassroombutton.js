@@ -42,8 +42,8 @@ class Addroombutton extends React.Component {
 
   render() {
     return (
-      <div className="button-container">
-        <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>
+      <div className="button-container card-body">
+        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           New Classroom
         </button>
 
@@ -77,7 +77,7 @@ class Addroombutton extends React.Component {
               />
             </label>
             {this.state.showForm && (
-              <button onClick={this.handleSubmit}>New Classroom</button>
+              <button className='btn btn-primary' onClick={this.handleSubmit} >New Classroom</button>
             )}
           </form>
         )}

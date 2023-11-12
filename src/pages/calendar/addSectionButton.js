@@ -41,8 +41,8 @@ class ButtonComponent extends React.Component {
 
     render() {
         return (
-            <div className="button-container">
-                <button className="btn btn-primary" onClick={() => this.setState({ showForm: !this.state.showForm })}>New section</button>
+            <div className="button-container card-body">
+                <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>New section</button>
 
                 {this.state.showForm && (
                     <form onSubmit={this.handleSubmit}>
