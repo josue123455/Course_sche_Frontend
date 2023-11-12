@@ -8,10 +8,12 @@
 
 
 import React from 'react';
+import RoomDropdown from './roomdropdown'; // importing the room dropdown
+import {updateRoom } from '../../functions/http'; // Import the Createroom method
 
 
 //using the state button when the button is not clicked the state does not show the text boxes
-class Updateroombutton extends React.Component {
+class Addroombutton extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +21,7 @@ class Updateroombutton extends React.Component {
       number: '',
       building: '',
       lab: '',
+
     };
   }
 
@@ -27,16 +30,32 @@ class Updateroombutton extends React.Component {
     const { name, value } = event.target;
     this.setState({ [name]: value });
   };
-
-  // Function to handle form submission
-  handleUpdate = () => {
-    // Handle professor update logic (e.g., send update request to API)
-    //chexk this part out for all fr just keep the line 32 and 38
-    console.log('Updating Room:', this.state.professorName);
-    // Reset the form and hide it after updating
-      // Reset the form and hide it after submission
-    this.setState({ showForm: false, number: '', building: '', lab: '' });
+  onSelectRoom = (selectedRoom) => {
+    this.setState({
+      number: selectedRoom.number,
+      building: selectedRoom.building,
+      lab: selectedRoom.lab,
+    
+    });
   };
+  // Function to handle form submission
+  handleUpdate = async (event) => {
+    event.preventDefault();
+
+    if (this.state.number && this.state.building && this.state.lab) {
+    await updateRoom({
+      number: this.state.number,
+      building: this.state.building,
+      lab: this.state.lab,
+      _id: this.state._id,
+
+
+    });
+    this.setState({ showForm: false, number: '', building: '', lab: '' });
+
+  
+  };
+}
 
   render() {
     return (
@@ -47,8 +66,13 @@ class Updateroombutton extends React.Component {
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
+          <label>
+              Select Room:
+              {/* Replace the input field with the CoursenumberDropdown component */}
+              <RoomDropdown onSelectRoom={this.onSelectRoom} />
+            </label>
             <label>
-            number:
+              number:
               <input
                 type="text"
                 name="number"
@@ -66,7 +90,7 @@ class Updateroombutton extends React.Component {
               />
             </label>
             <label>
-                lab:
+              lab:
               <input
                 type="text" // remeber to make these required as rommel so they are imported with no issues
                 name="lab"
@@ -75,7 +99,7 @@ class Updateroombutton extends React.Component {
               />
             </label>
             {this.state.showForm && (
-          <button className='btn btn-primary' onClick={this.handleUpdate}>Update Classroom</button>
+          <button onClick={this.handleUpdate}>Update Classroom</button>
           )}
           </form>
         )}
@@ -84,4 +108,4 @@ class Updateroombutton extends React.Component {
   }
 }
 
-export default Updateroombutton;
+export default Addroombutton;

@@ -23,11 +23,12 @@ const RoomDropdown = ({ onSelectRoom }) => {
 
   return (
     <select
+      id='selectedRoom'
       style={{ minHeight: '10px', color: 'black' }}
       onChange={(e) => {
-        const selectedRoom = rooms.find((room) => room._id === e.target.value);
-        onSelectRoom(selectedRoom);
-      }}
+      const selectedRoom = rooms.find((room) => room._id === e.target.value);
+      onSelectRoom(selectedRoom);
+}}
     >
       <option value="">Select Room</option>
       {rooms.map((room) => (
