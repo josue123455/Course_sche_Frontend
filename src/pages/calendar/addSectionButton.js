@@ -50,101 +50,131 @@ class ButtonComponent extends React.Component {
     render() {
         return (
             <div className="button-container">
-                <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>
-                    New section
-                </button>
+                <button className="btn btn-primary" onClick={() => this.setState({ showForm: true })}>New section</button>
 
                 {this.state.showForm && (
                     <form onSubmit={this.handleSubmit}>
-                        <label>
-                            section Number:
+                        <div className="form-group">
+                            <label htmlFor='sectionNumber' className="form-label">Section Number:</label>
                             <input
                                 type="text"
                                 name="sectionNumber"
+                                id='sectionNumber'
+                                className='form-control'
                                 value={this.state.sectionNumber}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            Course:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='course' className="form-label">Course:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="course"
+                                id='course'
+                                className='form-control'
                                 value={this.state.sectionRank}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            Class Mode (online, in person, hybrid):
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='classMode' className="form-label">Class Mode (online, in person, hybrid):</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="classMode"
-                                value={this.state.sectionRank}
+                                id='classMode'
+                                className='form-control'
+                                value={this.state.classMode}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            instructor:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='instructor' className="form-label">Instructor:</label>
                             <input
-                                type="text" 
-                                name=" instructor"
-                                value={this.state.sectionRank}
+                                type="text"
+                                name="instructor"
+                                id='instructor'
+                                className='form-control'
+                                value={this.state.instructor}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            Semester:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='semester' className="form-label">Semester:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="semester"
-                                value={this.state.sectionRank}
+                                id='semester'
+                                className='form-control'
+                                value={this.state.semester}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            schedule:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='schedule' className="form-label">Schedule:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="schedule"
-                                value={this.state.sectionRank}
+                                id='schedule'
+                                className='form-control'
+                                value={this.state.schedule}
                                 onChange={this.handleInputChange}
                             />
-                        </label>
-                        <label>
-                            start date:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='startDate' className="form-label">Start Date:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="startDate"
-                                value={this.state.sectionRank}
+                                id='startDate'
+                                className='form-control'
+                                value={this.state.startDate}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            end date:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='endDate' className="form-label">End Date:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="endDate"
-                                value={this.state.sectionRank}
+                                id='endDate'
+                                className='form-control'
+                                value={this.state.endDate}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        <label>
-                            Room:
+                        </div>
+
+                        <div className="form-group">
+                            <label htmlFor='room' className="form-label">Room:</label>
                             <input
-                                type="text" 
+                                type="text"
                                 name="room"
-                                value={this.state.sectionRank}
+                                id='room'
+                                className='form-control'
+                                value={this.state.room}
                                 onChange={this.handleInputChange}
+                                required
                             />
-                        </label>
-                        {this.state.showForm && (
-                            <button onClick={this.handleSubmit}>New section</button>
-                        )}
+                        </div>
+
+                        <button type="submit" className="btn btn-primary">Submit</button>
                     </form>
                 )}
             </div>
-        );
+        )
     }
 }
-
 export default ButtonComponent;
