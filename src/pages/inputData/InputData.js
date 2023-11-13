@@ -1,14 +1,14 @@
 import React from 'react';
-import AddProfessorButton from '../calendar/addprofessorbutton.js';
-import UpdateProfessorButtonComponent from '../calendar/updateprofessorbutton.js';
-import DeleteprofessorbuttonComponent from '../calendar/deleteprofessorbutton.js';
-import Addcoursebutton from '../calendar/addcoursebutton.js';
-import Updatecoursebutton from '../calendar/updatecoursebutton.js';
-import Deletecoursebutton from '../calendar/deletecoursebutton.js';
-import Addroombutton from '../calendar/addclassroombutton.js';
-import Updateroombutton from '../calendar/updateclassroombutton.js';
-import Deleteroombutton from '../calendar/deleteclassroombutton.js';
-import AddSectionbutton from '../calendar/addSectionButton.js';
+import AddProfessorButton from '../calendar/professorAddButton.js';
+import UpdateProfessorButtonComponent from '../calendar/professorUpdateButton.js';
+import DeleteprofessorbuttonComponent from '../calendar/professorDeleteButton.js';
+import Addcoursebutton from '../calendar/courseAddButton.js';
+import Updatecoursebutton from '../calendar/courseUpdateButton.js';
+import Deletecoursebutton from '../calendar/courseDeleteButton.js';
+import Addroombutton from '../calendar/roomAddButton.js';
+import Updateroombutton from '../calendar/roomUpdateButton.js';
+import Deleteroombutton from '../calendar/roomDeleteButton.js';
+import AddSectionbutton from '../calendar/sectionAddButton.js';
 
 
 class InputData extends React.Component {
