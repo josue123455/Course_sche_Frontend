@@ -8,7 +8,7 @@ import './CalendarStyles.css';
 import EventEditModal from './EventEditModal';
 import RoomDropdown from './roomdropdown'; // Import the room dropdown
 import ProfessorDropdown from './professordropdown.js';
-import
+import CoursenumberDropdown from './coursenumberdropdown.js'
 // Set up localization
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
