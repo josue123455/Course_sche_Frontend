@@ -1,5 +1,5 @@
 // Import necessary dependencies and components
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
@@ -9,6 +9,9 @@ import EventEditModal from './EventEditModal';
 import RoomDropdown from './roomdropdown'; // Import the room dropdown
 import ProfessorDropdown from './professordropdown.js';
 import CoursenumberDropdown from './coursenumberdropdown.js';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { getCourse } from '../../functions/http'; // Import the getCourse method
+
 // Set up localization
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
@@ -17,7 +20,7 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
   return (
     <div className="custom-toolbar">
       <div className="rbc-btn-group">
-        <div class="tab">
+        <div className="tab">
           <label>
             <RoomDropdown onSelectRoom={onRoomSelect} />
             <ProfessorDropdown onSelectProfessor={onSelectProfessor} />
@@ -30,28 +33,35 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
   );
 };
 
-// CalendarComponent component
 const CalendarComponent = () => {
-  // State to manage calendar events
-  const [events, setEvents] = React.useState([
-    // Your existing events
-  ]);
+  const [events, setEvents] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedRoom, setSelectedRoom] = useState(null);
+  const [selectedProfessor, setSelectedProfessor] = useState(null);
+  const [selectedCourse, setSelectedCourse] = useState(null);
 
-  // State to manage selected event
-  const [selectedEvent, setSelectedEvent] = React.useState(null);
+  useEffect(() => {
+    // Fetch initial events or populate as needed
+    // ...
 
-  // State to manage selected room
-  const [selectedRoom, setSelectedRoom] = React.useState(null);
+    // Fetch course data
+    const fetchData = async () => {
+      try {
+        const courseData = await getCourse();
+        if (courseData) {
+          // You may want to set the initial course or handle it according to your logic
+          // For example, setSelectedCourse(courseData[0]);
+        }
+      } catch (error) {
+        console.error('Error fetching course data:', error);
+        // Handle errors, e.g., show an error message to the user
+      }
+    };
 
-  // State to manage selected professor
-  const [selectedProfessor, setSelectedProfessor] = React.useState(null);
+    fetchData();
+  }, []);
 
-  // State to manage selected course
-  const [selectedCourse, setSelectedCourse] = React.useState(null);
-
-  // Function to handle event resizing
   const handleEventResize = (event, start, end) => {
-    // Update events with resized event
     const updatedEvents = events.map(existingEvent =>
       existingEvent.id === event.id
         ? { ...existingEvent, start, end }
@@ -60,9 +70,7 @@ const CalendarComponent = () => {
     setEvents(updatedEvents);
   };
 
-  // Function to handle event dragging
   const handleEventDrop = ({ event, start, end }) => {
-    // Update events with dragged event
     const updatedEvents = events.map(existingEvent =>
       existingEvent.id === event.id
         ? { ...existingEvent, start, end }
@@ -71,76 +79,68 @@ const CalendarComponent = () => {
     setEvents(updatedEvents);
   };
 
-  // Function to handle event selection
   const handleEventSelect = (event) => {
     setSelectedEvent(event);
   };
 
-  // Function to handle event editing
   const handleEventEdit = (updatedEvent) => {
-    // Update the event in the events array (state)
     const updatedEvents = events.map(existingEvent =>
       existingEvent.id === updatedEvent.id
         ? updatedEvent
         : existingEvent
     );
     setEvents(updatedEvents);
-
-    // Close the edit modal
     setSelectedEvent(null);
   };
 
-  // Function to handle room selection
   const handleRoomSelect = (selectedRoom) => {
-    // Update the selected room
     setSelectedRoom(selectedRoom);
-
-    // Filter events based on the selected room
     const filteredEvents = selectedRoom
       ? events.filter((event) => event.room && event.room._id === selectedRoom._id)
       : events;
-
-    // Update the events array with filtered events
     setEvents(filteredEvents);
   };
 
-  // Function to handle professor selection
   const handleProfessorSelect = (selectedProfessor) => {
     setSelectedProfessor(selectedProfessor);
-
-    // Filter events based on the selected professor
     const filteredEventsByProfessor = selectedProfessor
       ? events.filter((event) => event.professor && event.professor._id === selectedProfessor._id)
       : events;
-
-    // Update the events array with filtered events
     setEvents(filteredEventsByProfessor);
 
-    // Function to handle course selection
     setSelectedCourse(selectedProfessor);
-
-    // Filter events based on the selected course
     const filteredEventsByCourse = selectedCourse
       ? events.filter((event) => event.course && event.course._id === selectedCourse._id)
       : events;
+    setEvents(filteredEventsByCourse);
+  };
 
-    // Update the events array with filtered events
+  const handleCourseSelect = (selectedCourse) => {
+    setSelectedCourse(selectedCourse);
+    const filteredEventsByCourse = selectedCourse
+      ? events.filter((event) => event.course && event.course._id === selectedCourse._id)
+      : events;
     setEvents(filteredEventsByCourse);
   };
 
   return (
-    <div style={{ height: 650 }}>
-      {/* Calendar container with styling */}
+   
+
+  
+    
+    <div style={{ marginLeft: '10px' }}>
+      <Link to="../InputData">
+        <button>Go to InputData</button>
+      </Link>
       <div className="calendar-container" style={{ marginLeft: '300px' }}>
         <div className="calendar-container" style={{ paddingTop: '50px' }}>
-          {/* Drag and Drop Calendar component */}
           <DragAndDropCalendar
             localizer={localizer}
             events={events}
             defaultView="week"
             views={['week']}
             components={{
-              toolbar: () => <CustomToolbar onRoomSelect={handleRoomSelect} onSelectProfessor={handleProfessorSelect} />
+              toolbar: () => <CustomToolbar onRoomSelect={handleRoomSelect} onSelectProfessor={handleProfessorSelect} onSelectCourse={handleCourseSelect} />
             }}
             formats={{
               dayFormat: 'dddd',
@@ -150,7 +150,7 @@ const CalendarComponent = () => {
             }}
             onEventResize={handleEventResize}
             onEventDrop={handleEventDrop}
-            onSelectEvent={handleEventSelect} // Added event select handler
+            onSelectEvent={handleEventSelect}
             selectable
             resizable
             timeslots={2}
@@ -160,7 +160,6 @@ const CalendarComponent = () => {
         </div>
       </div>
 
-      {/* Event Edit Modal */}
       {selectedEvent && (
         <EventEditModal
           event={selectedEvent}
@@ -172,5 +171,4 @@ const CalendarComponent = () => {
   );
 };
 
-// Export the CalendarComponent
 export default CalendarComponent;
