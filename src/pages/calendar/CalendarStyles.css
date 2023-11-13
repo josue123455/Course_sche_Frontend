@@ -10,3 +10,18 @@
     padding: 10px;
     opacity: 0.8;
 }
+.custom-toolbar {
+    display: flex;
+    align-items: center; /* Align items vertically in the center, adjust as needed */
+  }
+
+  /* Adjust the styles for the dropdowns as needed */
+  /* Example styles */
+  .RoomDropdown,
+  .ProfessorDropdown,
+  .CoursenumberDropdown {
+    flex: 1; /* Distribute available space equally among dropdowns */
+    margin-right: 10px; /* Add spacing between dropdowns */
+  
+  }
+  

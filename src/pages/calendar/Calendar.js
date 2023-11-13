@@ -22,8 +22,8 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
       <div className="rbc-btn-group">
         <div className="tab">
           <label>
-            <RoomDropdown onSelectRoom={onRoomSelect} />
-            <ProfessorDropdown onSelectProfessor={onSelectProfessor} />
+            <RoomDropdown onSelectRoom={onRoomSelect} /> 
+            <ProfessorDropdown onSelectProfessor={onSelectProfessor} /> 
             <CoursenumberDropdown onSelectCourse={onSelectCourse} />
           </label>
         </div>
@@ -132,7 +132,7 @@ const CalendarComponent = () => {
       <Link to="../InputData">
         <button>Go to InputData</button>
       </Link>
-      <div className="calendar-container" style={{ marginLeft: '300px' }}>
+      <div className="calendar-container" style={{ marginLeft: '100px' }}>
         <div className="calendar-container" style={{ paddingTop: '50px' }}>
           <DragAndDropCalendar
             localizer={localizer}
