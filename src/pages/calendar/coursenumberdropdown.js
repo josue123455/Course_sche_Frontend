@@ -31,11 +31,11 @@ const CoursenumberDropdown = ({ onSelectCourse }) => {
       }}
       required
     >
-      <option disabled selected value="">Select Course</option>
+      <option value="">Select Course</option>
 
       {courses.map((course) => (
         <option key={course._id} value={course._id}>
-          {course.courseNumber}
+          {course.subject + ' - ' + course.courseNumber + ' - ' + course.title}
         </option>
       ))}
     </select>

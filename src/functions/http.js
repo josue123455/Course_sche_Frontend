@@ -6,10 +6,10 @@ import axios from 'axios';
 //
 // *************************
 
-export const createSectionMode = async (data) => {
+export const createSection = async (data) => {
   try {
     const response = await axios.post(
-      `${process.env.REACT_APP_BACKEND_URL}/sectionMode`,
+      `${process.env.REACT_APP_BACKEND_URL}/section`,
       data
     );
     if (response.status === 200) {
@@ -22,10 +22,10 @@ export const createSectionMode = async (data) => {
   }
 };
 
-export const getSectionMode = async () => {
+export const getSection = async () => {
   try {
     const response = await axios.get(
-      `${process.env.REACT_APP_BACKEND_URL}/sectionMode`
+      `${process.env.REACT_APP_BACKEND_URL}/section`
     );
     if (response.status === 200) {
       return response.data;

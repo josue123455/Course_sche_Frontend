@@ -78,7 +78,7 @@ class DeleteClassroomButton extends React.Component {
               readOnly
             />
 
-            <label htmlFor='lab' className='form-label'>Lab:</label>
+            <label htmlFor='lab' className='form-label'>Lab (true/false):</label>
             <input
               type="text"
               name="lab"
