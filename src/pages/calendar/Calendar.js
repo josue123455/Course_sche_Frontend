@@ -7,35 +7,29 @@ import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import './CalendarStyles.css';
 import EventEditModal from './EventEditModal';
 import RoomDropdown from './roomdropdown'; // Import the room dropdown
-
+import ProfessorDropdown from './professordropdown.js';
+import CoursenumberDropdown from './coursenumberdropdown.js'
 // Set up localization
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
 
-// ... (previous imports)
-
-// Custom toolbar component
-const CustomToolbar = ({ onRoomSelect }) => {
+const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
   return (
     <div className="custom-toolbar">
       <div className="rbc-btn-group">
         <div class="tab">
-        <label>
-              Select room:
-              {/* Replace the input field with the CoursenumberDropdown component */}
-              <RoomDropdown onSelectRoom={onRoomSelect} />
-            </label>
+          <label>
+            <RoomDropdown onSelectRoom={onRoomSelect} />
+            <ProfessorDropdown onSelectProfessor={onSelectProfessor} />
+            <CoursenumberDropdown onSelectCourse={onSelectCourse} />
+          </label>
         </div>
       </div>
       <div className="rbc-toolbar-label">Entire Calendar View </div>
     </div>
   );
 };
-
-
-
-//main code to worry about
-/// CalendarComponent component
+// CalendarComponent component
 const CalendarComponent = () => {
   // State to manage calendar events
   const [events, setEvents] = React.useState([
@@ -45,8 +39,13 @@ const CalendarComponent = () => {
   // State to manage selected event
   const [selectedEvent, setSelectedEvent] = React.useState(null);
 
+ 
   // State to manage selected room
-  const [selectedRoom, setSelectedRoom] = React.useState(null);  // Add this line
+const [selectedRoom, setSelectedRoom] = React.useState(null);
+
+
+  // State to manage selected professor
+  const [selectedProfessor, setSelectedProfessor] = React.useState(null);
 
   // Function to handle event resizing
   const handleEventResize = (event, start, end) => {
@@ -93,7 +92,7 @@ const CalendarComponent = () => {
   const handleRoomSelect = (selectedRoom) => {
     // Update the selected room
     setSelectedRoom(selectedRoom);
-    
+
     // Filter events based on the selected room
     const filteredEvents = selectedRoom
       ? events.filter((event) => event.room && event.room._id === selectedRoom._id)
@@ -103,8 +102,18 @@ const CalendarComponent = () => {
     setEvents(filteredEvents);
   };
 
-  // ... (rest of the code)
+  // Function to handle professor selection
+  const handleProfessorSelect = (selectedProfessor) => {
+    setSelectedProfessor(selectedProfessor);
 
+    // Filter events based on the selected professor
+    const filteredEvents = selectedProfessor
+      ? events.filter((event) => event.professor && event.professor._id === selectedProfessor._id)
+      : events;
+
+    // Update the events array with filtered events
+    setEvents(filteredEvents);
+  };
 
   return (
     <div style={{ height: 650 }}>
@@ -118,7 +127,7 @@ const CalendarComponent = () => {
             defaultView="week"
             views={['week']}
             components={{
-              toolbar: () => <CustomToolbar onRoomSelect={handleRoomSelect} />, // Custom toolbar
+              toolbar: () => <CustomToolbar onRoomSelect={handleRoomSelect} onSelectProfessor={handleProfessorSelect} />
             }}
             formats={{
               dayFormat: 'dddd',
