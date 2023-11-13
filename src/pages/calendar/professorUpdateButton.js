@@ -8,7 +8,7 @@
 
 import React from 'react';
 import ProfessorDropdown from './professordropdown.js'; // Replace 'path/to' with the correct path to your ProfessorDropdown component
-const { updateFaculty } = require('../../functions/http')
+const { updateFaculty } = require('../../functions/http.js')
 
 class UpdateProfessorButtonComponent extends React.Component {
   constructor(props) {
