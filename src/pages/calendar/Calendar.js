@@ -8,7 +8,7 @@ import './CalendarStyles.css';
 import EventEditModal from './EventEditModal';
 import RoomDropdown from './roomdropdown'; // Import the room dropdown
 import ProfessorDropdown from './professordropdown.js';
-import CoursenumberDropdown from './coursenumberdropdown.js'
+import CoursenumberDropdown from './coursenumberdropdown.js';
 // Set up localization
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
@@ -29,6 +29,7 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
     </div>
   );
 };
+
 // CalendarComponent component
 const CalendarComponent = () => {
   // State to manage calendar events
@@ -39,13 +40,14 @@ const CalendarComponent = () => {
   // State to manage selected event
   const [selectedEvent, setSelectedEvent] = React.useState(null);
 
- 
   // State to manage selected room
-const [selectedRoom, setSelectedRoom] = React.useState(null);
-
+  const [selectedRoom, setSelectedRoom] = React.useState(null);
 
   // State to manage selected professor
   const [selectedProfessor, setSelectedProfessor] = React.useState(null);
+
+  // State to manage selected course
+  const [selectedCourse, setSelectedCourse] = React.useState(null);
 
   // Function to handle event resizing
   const handleEventResize = (event, start, end) => {
@@ -107,12 +109,23 @@ const [selectedRoom, setSelectedRoom] = React.useState(null);
     setSelectedProfessor(selectedProfessor);
 
     // Filter events based on the selected professor
-    const filteredEvents = selectedProfessor
+    const filteredEventsByProfessor = selectedProfessor
       ? events.filter((event) => event.professor && event.professor._id === selectedProfessor._id)
       : events;
 
     // Update the events array with filtered events
-    setEvents(filteredEvents);
+    setEvents(filteredEventsByProfessor);
+
+    // Function to handle course selection
+    setSelectedCourse(selectedProfessor);
+
+    // Filter events based on the selected course
+    const filteredEventsByCourse = selectedCourse
+      ? events.filter((event) => event.course && event.course._id === selectedCourse._id)
+      : events;
+
+    // Update the events array with filtered events
+    setEvents(filteredEventsByCourse);
   };
 
   return (
