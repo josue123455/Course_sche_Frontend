@@ -31,7 +31,7 @@ const CoursenumberDropdown = ({ onSelectCourse }) => {
       }}
       required
     >
-      <option disabled value="">Select Course</option>
+      <option value="">Select Course</option>
 
       {courses.map((course) => (
         <option key={course._id} value={course._id}>

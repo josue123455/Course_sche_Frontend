@@ -32,7 +32,7 @@ const ProfessorDropdown = ({ onSelectProfessor }) => {
       required
     >
 
-      <option disabled value="">Select Professor</option>
+      <option value="">Select Professor</option>
 
       {professors.map((professor) => (
         <option key={professor._id} value={professor._id}>
