@@ -35,7 +35,7 @@ class UpdateCourseButtonComponent extends React.Component {
     this.setState({
       courseNumber: course.courseNumber,
       title: course.title,
-      subject: course.title,
+      subject: course.subject,
       description: course.description,
       id: course._id,
     });
@@ -74,6 +74,17 @@ class UpdateCourseButtonComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='selectedCourse' className='form-label'>Select Course:</label> 
             <CoursenumberDropdown onSelectCourse={this.onSelectCourse} />
+
+            <label htmlFor='subject' className='form-label'>Update Course Subject:</label>
+            <input
+              type="text"
+              name="subject"
+              id="subject"
+              className='form-control'
+              value={this.state.subject}
+              onChange={this.handleInputChange}
+            />
+
             <label htmlFor='courseNumber' className='form-label'>Update Course Number:            </label>
             <input
               type="text"
@@ -92,22 +103,14 @@ class UpdateCourseButtonComponent extends React.Component {
               value={this.state.title}
               onChange={this.handleInputChange}
             />
-            <label htmlFor='subject' className='form-label'>Update Course Subject:</label>
+
+            <label htmlFor='description' className='form-label'>Update Course Description:</label>
             <input
               type="text"
               name="description"
               id="description"
               className='form-control'
               value={this.state.description}
-              onChange={this.handleInputChange}
-            />
-            <label htmlFor='subject' className='form-label'>Update Course Description:</label>
-            <input
-              type="text"
-              name="subject"
-              id="subject"
-              className='form-control'
-              value={this.state.subject}
               onChange={this.handleInputChange}
             />
 

@@ -55,7 +55,6 @@ class Addcoursebutton extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <div className="form-group">
               <label htmlFor="courseNumber" className="form-label">courseNumber:</label>
-
               <input
                 type="text"
                 name="courseNumber"

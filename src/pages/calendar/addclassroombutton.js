@@ -82,7 +82,7 @@ class Addroombutton extends React.Component {
               value={this.state.building}
               onChange={this.handleInputChange}
             />
-            <label htmlFor='lab' className='form-label'>lab:</label>
+            <label htmlFor='lab' className='form-label'>lab (true/false):</label>
             <input
               type="text"
               name="lab"

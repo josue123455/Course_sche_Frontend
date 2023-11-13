@@ -74,7 +74,18 @@ class UpdateCourseButtonComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='courseNumberSelect' className='form-label'>Select Course:</label>
             <CoursenumberDropdown onSelectCourse={this.onSelectCourse} />
-            <label htmlFor='courseNumber' className='form-label'>Update Course Number:</label>
+            
+            <label htmlFor='subject' className='form-label'>Course Subject:</label>
+            <input
+              type="text"
+              name="description"
+              id="description"
+              className='form-control'
+              value={this.state.subject}
+              onChange={this.handleInputChange}
+            />
+
+            <label htmlFor='courseNumber' className='form-label'>Course Number:</label>
             <input
               type="text"
               name="courseNumber"
@@ -83,7 +94,7 @@ class UpdateCourseButtonComponent extends React.Component {
               value={this.state.courseNumber}
               onChange={this.handleInputChange}
             />
-            <label htmlFor='title' className='form-label'>Update Course Title:</label>
+            <label htmlFor='title' className='form-label'>Course Title:</label>
             <input
               type="text"
               name="title"
@@ -93,22 +104,13 @@ class UpdateCourseButtonComponent extends React.Component {
               onChange={this.handleInputChange}
             />
 
-            <label htmlFor='subject' className='form-label'>Update Course Subject:</label>
+            <label htmlFor='description' className='form-label'>Course Description:</label>
             <input
               type="text"
               name="description"
               id="description"
               className='form-control'
               value={this.state.description}
-              onChange={this.handleInputChange}
-            />
-            <label htmlFor='subject' className='form-label'>Update Course Description:</label>
-            <input
-              type="text"
-              name="subject"
-              id="subject"
-              className='form-control'
-              value={this.state.subject}
               onChange={this.handleInputChange}
             />
 

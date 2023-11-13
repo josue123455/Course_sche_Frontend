@@ -88,7 +88,7 @@ class AddroombUpdateroom extends React.Component {
             />
 
 
-            <label htmlFor="lab" className="form-label">lab:</label>
+            <label htmlFor="lab" className="form-label">lab (true/false):</label>
             <input
               type="text" // remeber to make these required as rommel so they are imported with no issues
               name="lab"
