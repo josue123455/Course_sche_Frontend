@@ -9,6 +9,7 @@ import Addroombutton from '../calendar/roomAddButton.js';
 import Updateroombutton from '../calendar/roomUpdateButton.js';
 import Deleteroombutton from '../calendar/roomDeleteButton.js';
 import AddSectionbutton from '../calendar/sectionAddButton.js';
+import UpdateSectionButton from '../calendar/sectionUpdateButton.js';
 
 
 class InputData extends React.Component {
@@ -56,6 +57,7 @@ class InputData extends React.Component {
           </div>
           <div className='card-body'>
             <AddSectionbutton />
+            <UpdateSectionButton />
           </div>
         </div>
       </div>

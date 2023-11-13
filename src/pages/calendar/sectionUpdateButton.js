@@ -2,14 +2,16 @@ import React from 'react';
 import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown';
 import RoomDropdown from './roomdropdown';
-const { createSection } = require('../../functions/http')
+import SectionDropdown from './sectionDropdown';
+const { updateSection } = require('../../functions/http')
 
 
-class AddSectionbutton extends React.Component {
+class UpdateSectionButton extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             showForm: false, // State to control form visibility
+            id: null,
             sectionNumber: '',
             course: null,
             mode: '',
@@ -54,18 +56,20 @@ class AddSectionbutton extends React.Component {
                 };
             });
 
-        await createSection({
-            sectionNumber: this.state.sectionNumber.toLowerCase(),
-            course: this.state.course,
-            mode: this.state.mode.toLowerCase(),
-            instructor: this.state.instructor,
-            year: this.state.year,
-            semester: this.state.semester,
-            schedule: schedule,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            room: this.state.room,
-        })
+        await updateSection(
+            this.state.id,
+            {
+                sectionNumber: this.state.sectionNumber.toLowerCase(),
+                course: this.state.course,
+                mode: this.state.mode.toLowerCase(),
+                instructor: this.state.instructor,
+                year: this.state.year,
+                semester: this.state.semester,
+                schedule: schedule,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                room: this.state.room,
+            })
 
         // Reset the form and hide it after submission
         this.setState({ showForm: false, sectionNumber: '', sectionRank: '' });
@@ -84,10 +88,14 @@ class AddSectionbutton extends React.Component {
     render() {
         return (
             <div className="button-container card-body">
-                <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>New section</button>
+                <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>Update section</button>
 
                 {this.state.showForm && (
                     <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label className="form-label">Section ID:</label>
+                            <SectionDropdown onSelectSection={(selectedSection) => { this.setState({ id: selectedSection }) }} />
+                        </div>
                         <div className="form-group">
                             <label htmlFor='sectionNumber' className="form-label">Section Number:</label>
                             <input
@@ -157,7 +165,7 @@ class AddSectionbutton extends React.Component {
                             <label htmlFor='days' className='form-label' >Select Days:</label>
                             {Object.keys(this.state.days).map((day) => (
                                 <div className='form-check' key={day}>
-                                    <label  htmlFor={day}>{day}</label>
+                                    <label htmlFor={day}>{day}</label>
                                     <input
                                         type='checkbox'
                                         name={day}
@@ -234,4 +242,4 @@ class AddSectionbutton extends React.Component {
         )
     }
 }
-export default AddSectionbutton;
+export default UpdateSectionButton;
