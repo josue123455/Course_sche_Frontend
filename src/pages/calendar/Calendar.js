@@ -1,4 +1,5 @@
-// Import necessary dependencies and components
+// CalendarComponent.js
+
 import React, { useState, useEffect } from 'react';
 import { Calendar, momentLocalizer } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
@@ -6,32 +7,15 @@ import moment from 'moment';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import './CalendarStyles.css';
 import EventEditModal from './EventEditModal';
-import RoomDropdown from './roomdropdown'; // Import the room dropdown
+import RoomDropdown from './roomdropdown';
 import ProfessorDropdown from './professordropdown.js';
 import CoursenumberDropdown from './coursenumberdropdown.js';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
-import { getCourse } from '../../functions/http'; // Import the getCourse method
+import YearSemesterToolbar from './YearSemesterToolbar'; // Import the new toolbar
+import { Link } from 'react-router-dom';
+import { getCourse } from '../../functions/http';
 
-// Set up localization
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
-
-const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
-  return (
-    <div className="custom-toolbar">
-      <div className="rbc-btn-group">
-        <div className="tab">
-          <label>
-            <RoomDropdown onSelectRoom={onRoomSelect} /> 
-            <ProfessorDropdown onSelectProfessor={onSelectProfessor} /> 
-            <CoursenumberDropdown onSelectCourse={onSelectCourse} />
-          </label>
-        </div>
-      </div>
-      <div className="rbc-toolbar-label">Entire Calendar View </div>
-    </div>
-  );
-};
 
 const CalendarComponent = () => {
   const [events, setEvents] = useState([]);
@@ -39,28 +23,10 @@ const CalendarComponent = () => {
   const [selectedRoom, setSelectedRoom] = useState(null);
   const [selectedProfessor, setSelectedProfessor] = useState(null);
   const [selectedCourse, setSelectedCourse] = useState(null);
+  const [selectedYear, setSelectedYear] = useState('');
+  const [selectedSemester, setSelectedSemester] = useState('');
 
-  useEffect(() => {
-    // Fetch initial events or populate as needed
-    // ...
-
-    // Fetch course data
-    const fetchData = async () => {
-      try {
-        const courseData = await getCourse();
-        if (courseData) {
-          // You may want to set the initial course or handle it according to your logic
-          // For example, setSelectedCourse(courseData[0]);
-        }
-      } catch (error) {
-        console.error('Error fetching course data:', error);
-        // Handle errors, e.g., show an error message to the user
-      }
-    };
-
-    fetchData();
-  }, []);
-
+  // Move these functions to the top of the component
   const handleEventResize = (event, start, end) => {
     const updatedEvents = events.map(existingEvent =>
       existingEvent.id === event.id
@@ -123,16 +89,38 @@ const CalendarComponent = () => {
     setEvents(filteredEventsByCourse);
   };
 
-  return (
-   
+  const handleYearSelect = (selectedYear) => {
+    setSelectedYear(selectedYear);
+    // Perform actions based on the selected year, e.g., fetch data
+  };
 
-  
-    
-    <div style={{ marginLeft: '10px' }}>
-      <Link to="../InputData">
-        <button>Go to InputData</button>
-      </Link>
-      <div className="calendar-container" style={{ marginLeft: '100px' }}>
+  const handleSemesterSelect = (selectedSemester) => {
+    setSelectedSemester(selectedSemester);
+    // Perform actions based on the selected semester, e.g., fetch data
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const courseData = await getCourse(selectedYear, selectedSemester);
+        // Handle course data accordingly
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        // Handle errors
+      }
+    };
+
+    fetchData();
+  }, [selectedYear, selectedSemester]);
+
+  return (
+    <div style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between' }}>
+      <div>
+        <Link to="../InputData">
+          <button>Go to InputData</button>
+        </Link>
+      </div>
+      <div className="calendar-container" style={{ marginLeft: '100px', flex: '1' }}>
         <div className="calendar-container" style={{ paddingTop: '50px' }}>
           <DragAndDropCalendar
             localizer={localizer}
@@ -140,7 +128,15 @@ const CalendarComponent = () => {
             defaultView="week"
             views={['week']}
             components={{
-              toolbar: () => <CustomToolbar onRoomSelect={handleRoomSelect} onSelectProfessor={handleProfessorSelect} onSelectCourse={handleCourseSelect} />
+              toolbar: () => (
+                <>
+                  <CustomToolbar
+                    onRoomSelect={handleRoomSelect}
+                    onSelectProfessor={handleProfessorSelect}
+                    onSelectCourse={handleCourseSelect}
+                  />
+                </>
+              ),
             }}
             formats={{
               dayFormat: 'dddd',
@@ -159,7 +155,12 @@ const CalendarComponent = () => {
           />
         </div>
       </div>
-
+      <div style={{ marginRight: '10px' }}>
+        <YearSemesterToolbar
+          onSelectYear={handleYearSelect}
+          onSelectSemester={handleSemesterSelect}
+        />
+      </div>
       {selectedEvent && (
         <EventEditModal
           event={selectedEvent}
@@ -167,6 +168,23 @@ const CalendarComponent = () => {
           onSave={handleEventEdit}
         />
       )}
+    </div>
+  );
+};
+
+const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
+  return (
+    <div className="custom-toolbar">
+      <div className="rbc-btn-group">
+        <div className="tab">
+          <label>
+            <RoomDropdown onSelectRoom={onRoomSelect} />
+            <ProfessorDropdown onSelectProfessor={onSelectProfessor} />
+            <CoursenumberDropdown onSelectCourse={onSelectCourse} />
+          </label>
+        </div>
+      </div>
+      <div className="rbc-toolbar-label">Entire Calendar View </div>
     </div>
   );
 };
