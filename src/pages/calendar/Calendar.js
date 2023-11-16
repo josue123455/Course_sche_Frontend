@@ -92,11 +92,15 @@ const CalendarComponent = () => {
   const handleYearSelect = (selectedYear) => {
     setSelectedYear(selectedYear);
     // Perform actions based on the selected year, e.g., fetch data
+
+
   };
 
   const handleSemesterSelect = (selectedSemester) => {
     setSelectedSemester(selectedSemester);
     // Perform actions based on the selected semester, e.g., fetch data
+
+    //set up the logic 
   };
 
   useEffect(() => {
