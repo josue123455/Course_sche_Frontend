@@ -6,17 +6,37 @@ import { getCourse } from '../../functions/http'; // Import the getCourse method
 class CoursenumberDropdown extends Component {
   constructor(props) {
     super(props);
+    this.selectedCourse = props.selectedCourse;
+    console.log("selectedCourse: ", this.selectedCourse);
+    this.courses = props.courses;
     this.state = {
-      courses: []
+      courses: this.courses ? this.courses : [],
+      selectedCourse: this.selectedCourse,
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("prevProps: ", prevProps);
+    if (prevProps.courses !== this.props.courses) {
+      this.setState({ courses: this.props.courses });
+    }
+    if (prevProps.selectedCourse !== this.props.selectedCourse) {
+      this.setState({ selectedCourse: this.props.selectedCourse });
+      console.log("selectedCourse: ", this.props.selectedCourse);
+      
+    }
   }
 
   async componentDidMount() {
     try {
-      const courseData = await getCourse();
-      if (courseData) {
-        this.setState({ courses: courseData });
+      if (!this.state.courses) {
+        const courses = await getCourse();
+        if (courses) {
+          this.setState({ courses: courses });
+        }
       }
+      // else
+      //   console.log("courses already exists");
     } catch (error) {
       console.error('Error fetching course data:', error);
       // Handle errors, e.g., show an error message to the user
@@ -32,9 +52,11 @@ class CoursenumberDropdown extends Component {
         id='courseNumberSelect'
         className='form-control'
         onChange={(e) => {
+          this.setState({ selectedCourse: e.target.value });
           const selectedCourse = courses.find((course) => course._id === e.target.value);
           onSelectCourse(selectedCourse);
         }}
+        value={this.state.selectedCourse ? this.state.selectedCourse._id : ''}
         required
       >
         <option value="">Select Course</option>

@@ -1,39 +1,74 @@
-// RoomDropdown.js
-
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import { getRoom } from '../../functions/http';
 
-const RoomDropdown = ({ onSelectRoom }) => {
-  const [rooms, setRooms] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const roomData = await getRoom();
-        if (roomData) {
-          setRooms(roomData);
-        }
-      } catch (error) {
-        console.error('Error fetching room data:', error);
-        // Handle errors, e.g., show an error message to the user
-      }
+class RoomDropdown extends Component {
+  constructor(props) {
+    super(props);
+    this.selectedRoom = props.selectedRoom;
+    console.log("selectedRoom: ", this.selectedRoom);
+    this.rooms = props.rooms;
+    this.state = {
+      rooms: this.rooms ? this.rooms : [],
+      selectedRoom: this.selectedRoom
     };
-    fetchData();
-  }, []); // Run the effect once when the component mounts
+  }
 
-  return (
-    <select
-      id='selectedRoom'
-      className='form-control'
-      onChange={(e) => {
-        const selectedRoom = rooms.find((room) => room._id === e.target.value);
-        onSelectRoom(selectedRoom);
-      }}
-    >
-      <option value="">Select Room</option>
-      {rooms.map((room) => (<option key={room._id} value={room._id}>{room.building} - {room.number}</option>))}
-    </select>
-  );
-};
+  componentDidUpdate(prevProps) {
+    // console.log("prevProps: ", prevProps);
+    if (prevProps.rooms !== this.props.rooms) {
+      this.setState({ rooms: this.props.rooms });
+    }
+    if (prevProps.selectedRoom !== this.props.selectedRoom) {
+      this.setState({ selectedRoom: this.props.selectedRoom });
+    }
+  }
+
+  async componentDidMount() {
+    try {
+      // console.log("rooms: ", this.state.rooms);
+      if (!this.state.rooms) {
+        const rooms = await getRoom();
+        if (rooms) {
+          this.setState({ rooms: rooms });
+        }
+      }
+      // else {
+      //   console.log("rooms already exists");
+      // }
+
+    } catch (error) {
+      console.error('Error fetching room data:', error);
+      // Handle errors, e.g., show an error message to the user
+    }
+  }
+
+  handleRoomChange = (e) => {
+    const { rooms } = this.state;
+    this.setState({ selectedRoom: e.target.value });
+    const selectedRoom = rooms.find((room) => room._id === e.target.value);
+    this.props.onSelectRoom(selectedRoom);
+  }
+
+  render() {
+    const { rooms } = this.state;
+
+    return (
+      <select
+        id='selectedRoom'
+        className='form-control'
+        onChange={this.handleRoomChange}
+        value={this.state.selectedRoom ? this.state.selectedRoom._id : ''}
+      >
+        <option value="">Select Room</option>
+        {rooms.map((room) => (
+          <option key={room._id} value={room._id}>
+            {room.building} - {room.number}
+          </option>
+        ))}
+      </select>
+    );
+  }
+}
 
 export default RoomDropdown;

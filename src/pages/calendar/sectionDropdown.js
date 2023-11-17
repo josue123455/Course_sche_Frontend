@@ -1,25 +1,44 @@
 import React from 'react';
-import { getSection, getCourse } from '../../functions/http';
+import { getSection } from '../../functions/http';
 
 
 class SectionDropdown extends React.Component {
   constructor(props) {
     super(props);
+    this.courses = props.courses;
+    this.instructors = props.instructors;
+    this.rooms = props.rooms;
+
     this.state = {
       sections: [],
+      courses: this.courses,
+      instructors: this.instructors,
+      rooms: this.rooms,
     };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.courses !== this.props.courses) {
+      this.setState({ courses: this.props.courses });
+    }
+    if (prevProps.instructors !== this.props.instructors) {
+      this.setState({ instructors: this.props.instructors });
+    }
+    if (prevProps.rooms !== this.props.rooms) {
+      this.setState({ rooms: this.props.rooms });
+    }
   }
 
   componentDidMount() {
     const fetchData = async () => {
       try {
         const sectionData = await getSection();
-        const courseData = await getCourse();
         if (sectionData) {
           this.setState({
             sections: sectionData.map((section) => {
-              const course = courseData.find((course) => course._id === section.course);
-              section.course = course;
+              section.course = this.courses.find((course) => course._id === section.course);
+              section.instructor = this.instructors.find((instructor) => instructor._id === section.instructor);
+              section.room = this.rooms.find((room) => room._id === section.room);
               return section;
             })
           });

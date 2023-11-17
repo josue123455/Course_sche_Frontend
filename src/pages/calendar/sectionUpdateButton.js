@@ -3,7 +3,7 @@ import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown';
 import RoomDropdown from './roomdropdown';
 import SectionDropdown from './sectionDropdown';
-const { updateSection } = require('../../functions/http')
+const { updateSection, getCourse, getFaculty, getRoom } = require('../../functions/http')
 
 
 class UpdateSectionButton extends React.Component {
@@ -14,13 +14,16 @@ class UpdateSectionButton extends React.Component {
             id: null,
             sectionNumber: '',
             course: null,
+            courses: [],
             mode: '',
             instructor: null,
+            instructors: [],
             year: 2023,
             semester: '',
             startDate: '',
             endDate: '',
             room: null,
+            rooms: [],
             startTime: '',
             endTime: '',
             days: {
@@ -33,6 +36,28 @@ class UpdateSectionButton extends React.Component {
                 Sunday: false,
             },
         };
+    }
+
+    async componentDidMount() {
+        try {
+            if (!this.state.facultyData) {
+                const facultyData = await getFaculty();
+                if (facultyData) {
+                    this.setState({ instructors: facultyData });
+                }
+                const courseData = await getCourse();
+                if (courseData) {
+                    this.setState({ courses: courseData });
+                }
+                const roomData = await getRoom();
+                if (roomData) {
+                    this.setState({ rooms: roomData });
+                }
+            }
+        } catch (error) {
+            console.error('Error fetching faculty data:', error);
+            // Handle errors, e.g., show an error message to the user
+        }
     }
 
     // Function to handle form input changes
@@ -85,6 +110,25 @@ class UpdateSectionButton extends React.Component {
         });
     };
 
+    handleSectionChange = (section) => {
+        //console.log("section: ", section);
+        this.setState({
+            id: section._id,
+            sectionNumber: section.sectionNumber,
+            course: section.course._id,
+            mode: section.mode,
+            instructor: section.instructor._id,
+            year: section.year,
+            semester: section.semester,
+            room: section.room?._id,
+            startTime: section.schedule[0].startTime,
+            endTime: section.schedule[0].endTime,
+            startDate: section.startDate,
+            endDate: section.endDate,
+        });
+        console.log("state: ", this.state);
+    }
+
     render() {
         return (
             <div className="button-container card-body">
@@ -94,7 +138,12 @@ class UpdateSectionButton extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-group">
                             <label className="form-label">Section ID:</label>
-                            <SectionDropdown onSelectSection={(selectedSection) => { this.setState({ id: selectedSection }) }} />
+                            <SectionDropdown
+                                onSelectSection={this.handleSectionChange}
+                                courses={this.state.courses}
+                                instructors={this.state.instructors}
+                                rooms={this.state.rooms}
+                            />
                         </div>
                         <div className="form-group">
                             <label htmlFor='sectionNumber' className="form-label">Section Number:</label>
@@ -111,7 +160,11 @@ class UpdateSectionButton extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='courseNumberSelect' className="form-label">Course:</label>
-                            <CoursenumberDropdown onSelectCourse={(selectedCourse) => { this.setState({ course: selectedCourse }) }} />
+                            <CoursenumberDropdown
+                                onSelectCourse={(courseSelected) => { this.setState({ course: courseSelected }) }}
+                                courses={this.state.courses}
+                                selectedCourse={this.state.course}
+                            />
                         </div>
 
                         <div className="form-group">
@@ -129,7 +182,11 @@ class UpdateSectionButton extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='professorSelect' className="form-label">Instructor:</label>
-                            <ProfessorDropdown onSelectProfessor={(selectedProfessor) => { this.setState({ instructor: selectedProfessor }) }} />
+                            <ProfessorDropdown
+                                onSelectProfessor={(professor) => { this.setState({ instructor: professor }) }}
+                                professors={this.state.instructors}
+                                selectedProfessor={this.state.instructor}
+                            />
                         </div>
 
                         <div className="form-group">
@@ -233,7 +290,11 @@ class UpdateSectionButton extends React.Component {
 
                         <div className="form-group">
                             <label htmlFor='room' className="form-label">Room:</label>
-                            <RoomDropdown onSelectRoom={(selectedRoom) => { this.setState({ room: selectedRoom }) }} />
+                            <RoomDropdown
+                                onSelectRoom={(roomSelected) => { this.setState({ room: roomSelected }) }}
+                                rooms={this.state.rooms}
+                                selectedRoom={this.state.room}
+                            />
                         </div>
                         <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
                     </form>
