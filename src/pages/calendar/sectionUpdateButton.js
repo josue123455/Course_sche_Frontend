@@ -262,7 +262,7 @@ class UpdateSectionButton extends React.Component {
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor='startTime' className='form-label' >Start Time:</label>
+                            <label htmlFor='startTime' className='form-label' >Start Time(8AM-10PM):</label>
                             <input
                                 type='time'
                                 name='startTime'
@@ -273,7 +273,7 @@ class UpdateSectionButton extends React.Component {
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='endTime' className='form-label'>End Time:</label>
+                            <label htmlFor='endTime' className='form-label'>End Time(8AM-10PM):</label>
                             <input
                                 type='time'
                                 name='endTime'

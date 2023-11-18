@@ -172,9 +172,11 @@ class AddSectionbutton extends React.Component {
                         </div>
 
                         <div className='form-group'>
-                            <label htmlFor='startTime' className='form-label' >Start Time:</label>
+                            <label htmlFor='startTime' className='form-label' >Start Time(8AM-10PM):</label>
                             <input
                                 type='time'
+                                min='08:00'
+                                max='22:00'
                                 name='startTime'
                                 value={this.state.startTime}
                                 id='startTime'
@@ -183,9 +185,11 @@ class AddSectionbutton extends React.Component {
                             />
                         </div>
                         <div className='form-group'>
-                            <label htmlFor='endTime' className='form-label'>End Time:</label>
+                            <label htmlFor='endTime' className='form-label'>End Time(8AM-10PM):</label>
                             <input
                                 type='time'
+                                min='08:00'
+                                max='22:00'
                                 name='endTime'
                                 value={this.state.endTime}
                                 id='endTime'

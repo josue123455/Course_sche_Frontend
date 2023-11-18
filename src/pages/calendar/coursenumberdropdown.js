@@ -7,7 +7,7 @@ class CoursenumberDropdown extends Component {
   constructor(props) {
     super(props);
     this.selectedCourse = props.selectedCourse;
-    console.log("selectedCourse: ", this.selectedCourse);
+    // console.log("selectedCourse: ", this.selectedCourse);
     this.courses = props.courses;
     this.state = {
       courses: this.courses ? this.courses : [],
