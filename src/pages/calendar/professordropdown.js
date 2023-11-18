@@ -6,12 +6,9 @@ class ProfessorDropdown extends Component {
     super(props);
     this.selectedProfessor = props.selectedProfessor;
     this.professors = props.professors;
-    //console.log("professors: ", this.professors);
-    console.log("selectedProfessor: ", this.selectedProfessor);
 
     this.state = {
-      professors: this.professors ? this.professors : []
-      ,
+      professors: this.professors ? this.professors : [],
       selectedProfessor: this.selectedProfessor
     };
   }
@@ -27,7 +24,7 @@ class ProfessorDropdown extends Component {
 
   async componentDidMount() {
     try {
-      if (!this.state.professors) {
+      if (!this.state.professors || this.state.professors.length === 0) {
         const professors = await getFaculty();
         if (professors) {
           this.setState({ professors: professors });

@@ -16,20 +16,18 @@ class CoursenumberDropdown extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("prevProps: ", prevProps);
+    
     if (prevProps.courses !== this.props.courses) {
       this.setState({ courses: this.props.courses });
     }
     if (prevProps.selectedCourse !== this.props.selectedCourse) {
       this.setState({ selectedCourse: this.props.selectedCourse });
-      console.log("selectedCourse: ", this.props.selectedCourse);
-      
     }
   }
 
   async componentDidMount() {
     try {
-      if (!this.state.courses) {
+      if (!this.state.courses || this.state.courses.length === 0) {
         const courses = await getCourse();
         if (courses) {
           this.setState({ courses: courses });

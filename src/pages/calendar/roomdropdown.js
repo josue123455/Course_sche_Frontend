@@ -27,7 +27,7 @@ class RoomDropdown extends Component {
   async componentDidMount() {
     try {
       // console.log("rooms: ", this.state.rooms);
-      if (!this.state.rooms) {
+      if (!this.state.rooms || this.state.rooms.length === 0) {
         const rooms = await getRoom();
         if (rooms) {
           this.setState({ rooms: rooms });
