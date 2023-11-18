@@ -32,12 +32,13 @@ class AddProfessorButton extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    await createFaculty({
+    if (await createFaculty({
       name: this.state.professorName,
       rank: this.state.professorRank
-    })
-    // Reset the form and hide it after submission
-    this.setState({ showForm: false, professorName: '', professorRank: '' });
+    })) {
+      // Reset the form and hide it after submission
+      this.setState({ showForm: false, professorName: '', professorRank: '' });
+    }
   };
 
   render() {

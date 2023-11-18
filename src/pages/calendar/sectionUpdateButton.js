@@ -85,12 +85,12 @@ class UpdateSectionButton extends React.Component {
                 };
             });
 
-        await updateSection(
+        if (await updateSection(
             this.state.id,
             {
-                sectionNumber: this.state.sectionNumber.toLowerCase(),
+                sectionNumber: this.state.sectionNumber?.toLowerCase(),
                 course: this.state.course,
-                mode: this.state.mode.toLowerCase(),
+                mode: this.state.mode?.toLowerCase(),
                 instructor: this.state.instructor,
                 year: this.state.year,
                 semester: this.state.semester,
@@ -98,10 +98,10 @@ class UpdateSectionButton extends React.Component {
                 startDate: this.state.startDate,
                 endDate: this.state.endDate,
                 room: this.state.room,
-            })
-
-        // Reset the form and hide it after submission
-        this.setState(structuredClone(this.defaultState));
+            })) {
+            // Reset the form and hide it after submission
+            this.setState(structuredClone(this.defaultState));
+        }
     };
 
     // Function to handle day toggles. 
@@ -137,10 +137,10 @@ class UpdateSectionButton extends React.Component {
             year: section.year,
             semester: section.semester,
             room: section.room?._id,
-            startTime: section.schedule[0].startTime,
-            endTime: section.schedule[0].endTime,
-            startDate: section.startDate.split('T')[0],
-            endDate: section.endDate.split('T')[0],
+            startTime: section.schedule[0]?.startTime,
+            endTime: section.schedule[0]?.endTime,
+            startDate: section.startDate?.split('T')[0],
+            endDate: section.endDate?.split('T')[0],
             days: selectedDays,
         });
 

@@ -34,14 +34,14 @@ class UpdateProfessorButtonComponent extends React.Component {
   handleUpdate = async (event) => {
     event.preventDefault();
 
-    if (this.state.professorName) {
+    if (
       await updateFaculty(
         this.state.id,
         {
           name: this.state.professorName,
           rank: this.state.professorRank,
           _id: this.state.id
-        });
+        })) {
       this.setState({ showForm: false, professorName: '', professorRank: '' });
 
     }
@@ -60,23 +60,23 @@ class UpdateProfessorButtonComponent extends React.Component {
             <ProfessorDropdown onSelectProfessor={this.onSelectProfessor} />
 
             <label htmlFor="professorName" className="form-label">Update Professor Name:</label>
-              <input
-                type="text"
-                name="professorName"
-                id="professorName"
-                className="form-control"
-                value={this.state.professorName}
-                onChange={this.handleInputChange}
-              />
+            <input
+              type="text"
+              name="professorName"
+              id="professorName"
+              className="form-control"
+              value={this.state.professorName}
+              onChange={this.handleInputChange}
+            />
             <label htmlFor="professorRank" className="form-label">Update Professor Rank:</label>
-              <input
-                type="text"
-                name="professorRank"
-                id="professorRank"
-                className="form-control"
-                value={this.state.professorRank}
-                onChange={this.handleInputChange}
-              />
+            <input
+              type="text"
+              name="professorRank"
+              id="professorRank"
+              className="form-control"
+              value={this.state.professorRank}
+              onChange={this.handleInputChange}
+            />
 
             {this.state.showForm && (
               <button className='btn btn-primary' onClick={this.handleUpdate}>Update Professor</button>

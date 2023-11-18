@@ -53,6 +53,21 @@ export const updateSection = async (id, data) => {
   }
 }
 
+export const deleteSection = async (id) => {
+  try {
+    const response = await axios.delete(
+      `${process.env.REACT_APP_BACKEND_URL}/section/${id}`
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 // *************************
 //
 //  Room related functions.

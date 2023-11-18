@@ -33,13 +33,12 @@ class Addroombutton extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    await createRoom({
+    if (await createRoom({
       number: this.state.number,
       building: this.state.building,
-      lab: this.state.lab,
-
-    });
-    this.setState({ showForm: false, number: '', building: '', lab: '' });
+      lab: this.state.lab ? true : false,
+    }))
+      this.setState({ showForm: false, number: '', building: '', lab: '' });
   }; catch(error) {
     if (error.response && error.response.status === 500) {
       console.error('Duplicate room number. Please choose a different room number.');

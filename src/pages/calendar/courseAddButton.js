@@ -34,20 +34,21 @@ class Addcoursebutton extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    await createCourse({
+    if (await createCourse({
       courseNumber: this.state.courseNumber,
       title: this.state.title,
       subject: this.state.subject,
       description: this.state.description
 
-    })
-    this.setState({ showForm: false, subject: '', courseNumber: '', title: '', description: '' });
+    })) {
+      this.setState({ showForm: false, subject: '', courseNumber: '', title: '', description: '' });
+    }
   };
 
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark"onClick={() => this.setState({ showForm: !this.state.showForm })}>
+        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>
           New Course
         </button>
 

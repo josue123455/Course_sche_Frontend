@@ -42,13 +42,13 @@ class AddroombUpdateroom extends React.Component {
   handleUpdate = async (event) => {
     event.preventDefault();
 
-    if (this.state.number && this.state.building && this.state.lab) {
+    if (
       await updateRoom(this.state._id, {
         number: this.state.number,
         building: this.state.building,
         lab: this.state.lab,
         _id: this.state._id,
-      });
+      })) {
       this.setState({ showForm: false, number: '', building: '', lab: '' });
 
     }

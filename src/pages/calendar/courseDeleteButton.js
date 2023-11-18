@@ -45,14 +45,14 @@ class UpdateCourseButtonComponent extends React.Component {
   handleDelete = async (event) => {
     event.preventDefault();
 
-    if (this.state.courseNumber && this.state.title) {
+    if (
       await deleteCourse(this.state.id, {
         courseNumber: this.state.courseNumber,
         title: this.state.title,
         subject: this.state.subject,
         description: this.state.description,
         _id: this.state.id,
-      });
+      })) {
       this.setState({
         showForm: false,
         courseNumber: '',
@@ -74,7 +74,7 @@ class UpdateCourseButtonComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
             <label htmlFor='courseNumberSelect' className='form-label'>Select Course:</label>
             <CoursenumberDropdown onSelectCourse={this.onSelectCourse} />
-            
+
             <label htmlFor='subject' className='form-label'>Course Subject:</label>
             <input
               type="text"
