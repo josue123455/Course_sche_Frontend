@@ -10,9 +10,9 @@ import EventEditModal from './EventEditModal';
 import RoomDropdown from './roomdropdown';
 import ProfessorDropdown from './professordropdown.js';
 import CoursenumberDropdown from './coursenumberdropdown.js';
-import YearSemesterToolbar from './YearSemesterToolbar'; // Import the new toolbar
+import YearSemesterToolbar from './YearSemesterToolbar';
 import { Link } from 'react-router-dom';
-import { getCourse } from '../../functions/http';
+import { getSection, getCourse, getFaculty, getRoom } from '../../functions/http';
 
 const localizer = momentLocalizer(moment);
 const DragAndDropCalendar = withDragAndDrop(Calendar);
@@ -26,7 +26,6 @@ const CalendarComponent = () => {
   const [selectedYear, setSelectedYear] = useState('');
   const [selectedSemester, setSelectedSemester] = useState('');
 
-  // Move these functions to the top of the component
   const handleEventResize = (event, start, end) => {
     const updatedEvents = events.map(existingEvent =>
       existingEvent.id === event.id
@@ -92,30 +91,57 @@ const CalendarComponent = () => {
   const handleYearSelect = (selectedYear) => {
     setSelectedYear(selectedYear);
     // Perform actions based on the selected year, e.g., fetch data
-
-
   };
 
   const handleSemesterSelect = (selectedSemester) => {
     setSelectedSemester(selectedSemester);
     // Perform actions based on the selected semester, e.g., fetch data
-
-    //set up the logic 
   };
-
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const courseData = await getCourse(selectedYear, selectedSemester);
-        // Handle course data accordingly
+        const sectionData = await getSection();
+  
+        if (sectionData) {
+          const formattedEvents = await Promise.all(sectionData.map(async (section) => {
+            const { sectionNumber, schedule, course, instructor, room } = section;
+  
+            if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
+              const courseId = course?.$oid;
+              const instructorId = instructor?.$oid;
+              const roomId = room?.$oid;
+  
+              const [fetchedCourse, fetchedInstructor, fetchedRoom] = await Promise.all([
+                getCourse(courseId),
+                getFaculty(instructorId),
+                roomId ? getRoom(roomId) : null,  // Fetch room only if roomId is present
+              ]);
+  
+              const title = `${sectionNumber} - ${fetchedCourse ? fetchedCourse.subject + ' ' + fetchedCourse.courseNumber : ''} - ${fetchedInstructor ? fetchedInstructor.name : ''} - ${fetchedRoom ? fetchedRoom.name : ''}`;
+  
+              const event = {
+                id: section._id,
+                title: title,
+                start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
+                end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
+              };
+              return event;
+            }
+  
+            return null;
+          }));
+  
+          const filteredEvents = formattedEvents.filter(event => event !== null);
+          setEvents(filteredEvents);
+        }
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error('Error fetching section data:', error);
         // Handle errors
       }
     };
-
+  
     fetchData();
-  }, [selectedYear, selectedSemester]);
+  }, []);
 
   return (
     <div style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between' }}>
