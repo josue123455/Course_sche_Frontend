@@ -3,13 +3,13 @@ import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown';
 import RoomDropdown from './roomdropdown';
 import SectionDropdown from './sectionDropdown';
-const { updateSection, getCourse, getFaculty, getRoom } = require('../../functions/http')
+const { getCourse, getFaculty, getRoom, updateSection } = require('../../functions/http')
 
 
 class UpdateSectionButton extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.defaultState = {
             showForm: false, // State to control form visibility
             id: null,
             sectionNumber: '',
@@ -36,6 +36,7 @@ class UpdateSectionButton extends React.Component {
                 Sunday: false,
             },
         };
+        this.state = structuredClone(this.defaultState);
     }
 
     async componentDidMount() {
@@ -44,14 +45,17 @@ class UpdateSectionButton extends React.Component {
                 const facultyData = await getFaculty();
                 if (facultyData) {
                     this.setState({ instructors: facultyData });
+                    this.defaultState.instructors = facultyData;
                 }
                 const courseData = await getCourse();
                 if (courseData) {
                     this.setState({ courses: courseData });
+                    this.defaultState.courses = courseData;
                 }
                 const roomData = await getRoom();
                 if (roomData) {
                     this.setState({ rooms: roomData });
+                    this.defaultState.rooms = roomData;
                 }
             }
         } catch (error) {
@@ -97,7 +101,7 @@ class UpdateSectionButton extends React.Component {
             })
 
         // Reset the form and hide it after submission
-        this.setState({ showForm: false, sectionNumber: '', sectionRank: '' });
+        this.setState(structuredClone(this.defaultState));
     };
 
     // Function to handle day toggles. 
@@ -111,22 +115,35 @@ class UpdateSectionButton extends React.Component {
     };
 
     handleSectionChange = (section) => {
-        //console.log("section: ", section);
+        // console.log("section: ", section);
+
+        // if a day is in section.schedule, set the day to true
+        const selectedDays = {
+            Monday: section.schedule.some((day) => day.day === 'Monday'),
+            Tuesday: section.schedule.some((day) => day.day === 'Tuesday'),
+            Wednesday: section.schedule.some((day) => day.day === 'Wednesday'),
+            Thursday: section.schedule.some((day) => day.day === 'Thursday'),
+            Friday: section.schedule.some((day) => day.day === 'Friday'),
+            Saturday: section.schedule.some((day) => day.day === 'Saturday'),
+            Sunday: section.schedule.some((day) => day.day === 'Sunday'),
+        };
+
         this.setState({
             id: section._id,
             sectionNumber: section.sectionNumber,
-            course: section.course._id,
+            course: section.course?._id,
             mode: section.mode,
-            instructor: section.instructor._id,
+            instructor: section.instructor?._id,
             year: section.year,
             semester: section.semester,
             room: section.room?._id,
             startTime: section.schedule[0].startTime,
             endTime: section.schedule[0].endTime,
-            startDate: section.startDate,
-            endDate: section.endDate,
+            startDate: section.startDate.split('T')[0],
+            endDate: section.endDate.split('T')[0],
+            days: selectedDays,
         });
-        console.log("state: ", this.state);
+
     }
 
     render() {
@@ -161,7 +178,12 @@ class UpdateSectionButton extends React.Component {
                         <div className="form-group">
                             <label htmlFor='courseNumberSelect' className="form-label">Course:</label>
                             <CoursenumberDropdown
-                                onSelectCourse={(courseSelected) => { this.setState({ course: courseSelected }) }}
+                                onSelectCourse={(courseSelected) => {
+                                    this.setState({
+                                        course: courseSelected._id
+                                    });
+                                    // console.log("courseSelected: ", courseSelected);
+                                }}
                                 courses={this.state.courses}
                                 selectedCourse={this.state.course}
                             />
@@ -183,7 +205,11 @@ class UpdateSectionButton extends React.Component {
                         <div className="form-group">
                             <label htmlFor='professorSelect' className="form-label">Instructor:</label>
                             <ProfessorDropdown
-                                onSelectProfessor={(professor) => { this.setState({ instructor: professor }) }}
+                                onSelectProfessor={(professor) => {
+                                    this.setState({
+                                        instructor: professor._id
+                                    })
+                                }}
                                 professors={this.state.instructors}
                                 selectedProfessor={this.state.instructor}
                             />
@@ -291,7 +317,11 @@ class UpdateSectionButton extends React.Component {
                         <div className="form-group">
                             <label htmlFor='room' className="form-label">Room:</label>
                             <RoomDropdown
-                                onSelectRoom={(roomSelected) => { this.setState({ room: roomSelected }) }}
+                                onSelectRoom={(roomSelected) => {
+                                    this.setState({
+                                        room: roomSelected._id
+                                    })
+                                }}
                                 rooms={this.state.rooms}
                                 selectedRoom={this.state.room}
                             />

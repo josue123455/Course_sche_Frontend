@@ -37,6 +37,22 @@ export const getSection = async () => {
   }
 };
 
+export const updateSection = async (id, data) => {
+  try {
+    const response = await axios.put(
+      `${process.env.REACT_APP_BACKEND_URL}/section/${id}`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 // *************************
 //
 //  Room related functions.

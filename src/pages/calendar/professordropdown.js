@@ -17,6 +17,7 @@ class ProfessorDropdown extends Component {
     if (prevProps.professors !== this.props.professors) {
       this.setState({ professors: this.props.professors });
     }
+    
     if (prevProps.selectedProfessor !== this.props.selectedProfessor) {
       this.setState({ selectedProfessor: this.props.selectedProfessor });
     }
@@ -51,7 +52,7 @@ class ProfessorDropdown extends Component {
           const selectedProfessor = professors.find((professor) => professor._id === e.target.value);
           onSelectProfessor(selectedProfessor);
         }}
-        value={this.state.selectedProfessor ? this.state.selectedProfessor._id : ''}
+        value={this.state.selectedProfessor ? this.state.selectedProfessor : ''}
         required
       >
         <option value="">Select Professor</option>

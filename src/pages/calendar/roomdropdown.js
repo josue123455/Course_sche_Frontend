@@ -6,7 +6,7 @@ class RoomDropdown extends Component {
   constructor(props) {
     super(props);
     this.selectedRoom = props.selectedRoom;
-    console.log("selectedRoom: ", this.selectedRoom);
+    // console.log("selectedRoom: ", this.selectedRoom);
     this.rooms = props.rooms;
     this.state = {
       rooms: this.rooms ? this.rooms : [],
@@ -58,7 +58,7 @@ class RoomDropdown extends Component {
         id='selectedRoom'
         className='form-control'
         onChange={this.handleRoomChange}
-        value={this.state.selectedRoom ? this.state.selectedRoom._id : ''}
+        value={this.state.selectedRoom ? this.state.selectedRoom : ''}
       >
         <option value="">Select Room</option>
         {rooms.map((room) => (

@@ -21,6 +21,7 @@ class CoursenumberDropdown extends Component {
       this.setState({ courses: this.props.courses });
     }
     if (prevProps.selectedCourse !== this.props.selectedCourse) {
+      // console.log("this.props.selectedCourse: ", this.props.selectedCourse);
       this.setState({ selectedCourse: this.props.selectedCourse });
     }
   }
@@ -54,7 +55,7 @@ class CoursenumberDropdown extends Component {
           const selectedCourse = courses.find((course) => course._id === e.target.value);
           onSelectCourse(selectedCourse);
         }}
-        value={this.state.selectedCourse ? this.state.selectedCourse._id : ''}
+        value={this.state.selectedCourse ? this.state.selectedCourse : ''}
         required
       >
         <option value="">Select Course</option>
