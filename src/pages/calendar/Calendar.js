@@ -20,7 +20,6 @@ class CalendarComponent extends Component {
     super(props);
 
     this.state = {
-      eventBase: [],
       events: [],
       sections: [],
       courses: [],
@@ -67,35 +66,40 @@ class CalendarComponent extends Component {
   };
 
   handleRoomSelect = (selectedRoom) => {
-    this.setState({ selectedRoom: selectedRoom });
-    const filteredEvents = selectedRoom
-      ? this.state.events.filter((event) => event.room && event.room._id === selectedRoom._id)
-      : this.state.events;
-    this.setState({ events: filteredEvents });
+    if (selectedRoom?._id) {
+      this.setState({ selectedRoom: selectedRoom });
+      const filteredEvents = this.state.sections.filter((section) => section.room && section.room._id === selectedRoom._id);
+      this.convertSectionsToEvents(filteredEvents);
+    }
+    else {
+      this.setState({ selectedRoom: null });
+      this.convertSectionsToEvents(this.state.sections);
+    }
+
   };
 
   handleProfessorSelect = (selectedProfessor) => {
-    this.setState({ selectedProfessor: selectedProfessor });
-    const filteredEventsByProfessor = selectedProfessor
-      ? this.state.events.filter((event) => event.professor && event.professor._id === selectedProfessor._id)
-      : this.state.events;
-    this.setState({ events: filteredEventsByProfessor });
-
-    // Note: The following lines seemed incorrect in the original code
-    // You might need to adjust the logic based on your requirements
-    this.setState({ selectedCourse: selectedProfessor });
-    const filteredEventsByCourse = selectedProfessor
-      ? this.state.events.filter((event) => event.course && event.course._id === selectedProfessor._id)
-      : this.state.events;
-    this.setState({ events: filteredEventsByCourse });
+    if (selectedProfessor?._id) {
+      this.setState({ selectedProfessor: selectedProfessor });
+      const filteredEvents = this.state.sections.filter((section) => section.instructor && section.instructor._id === selectedProfessor._id);
+      this.convertSectionsToEvents(filteredEvents);
+    }
+    else {
+      this.setState({ selectedProfessor: null });
+      this.convertSectionsToEvents(this.state.sections);
+    }
   };
 
   handleCourseSelect = (selectedCourse) => {
-    this.setState({ selectedCourse: selectedCourse });
-    const filteredEventsByCourse = selectedCourse
-      ? this.state.events.filter((event) => event.course && event.course._id === selectedCourse._id)
-      : this.state.events;
-    this.setState({ events: filteredEventsByCourse });
+    if (selectedCourse?._id) {
+      this.setState({ selectedCourse: selectedCourse });
+      const filteredEvents = this.state.sections.filter((section) => section.course && section.course._id === selectedCourse._id);
+      this.convertSectionsToEvents(filteredEvents);
+    }
+    else {
+      this.setState({ selectedCourse: null });
+      this.convertSectionsToEvents(this.state.sections);
+    }
   };
 
   handleYearSelect = (selectedYear) => {
@@ -127,35 +131,34 @@ class CalendarComponent extends Component {
         return section;
       });
 
-      if (sectionData) {
-        const formattedEvents =
-          sectionData.map((section) => {
-            const { sectionNumber, schedule, course, instructor, room } = section;
-
-            if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
-
-              const title = `${sectionNumber} - ${course ? course.subject + ' ' + course.courseNumber : ''} - ${instructor ? instructor.name : ''} - ${room ? room.building + ' ' + room.number : ''}`;
-
-              const event = {
-                id: section._id,
-                title: title,
-                start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
-                end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
-              };
-              return event;
-            }
-
-            return null;
-          });
-
-        const filteredEvents = formattedEvents.filter(event => event !== null);
-        this.setState({ eventBase: filteredEvents });
-        this.setState({ events: filteredEvents });
-        console.log(this.state.events);
-      }
+      this.convertSectionsToEvents(sectionData);
     } catch (error) {
       console.error('Error fetching section data:', error);
-      // Handle errors
+    }
+  }
+
+  convertSectionsToEvents(sectionData) {
+    if (sectionData) {
+      const formattedEvents = sectionData.map((section) => {
+        const { sectionNumber, schedule, course, instructor, room } = section;
+
+        if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
+
+          const title = `${sectionNumber} - ${course ? course.subject + ' ' + course.courseNumber : ''} - ${instructor ? instructor.name : ''} - ${room ? room.building + ' ' + room.number : ''}`;
+
+          //TODO: fix only showing first day of schedule
+          const event = {
+            id: section._id,
+            title: title,
+            start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
+            end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
+          };
+          return event;
+        }
+        return null;
+      });
+
+      this.setState({ events: formattedEvents.filter(event => event !== null) });
     }
   }
 
