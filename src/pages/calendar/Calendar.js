@@ -66,40 +66,41 @@ class CalendarComponent extends Component {
   };
 
   handleRoomSelect = (selectedRoom) => {
+
     if (selectedRoom?._id) {
-      this.setState({ selectedRoom: selectedRoom });
-      const filteredEvents = this.state.sections.filter((section) => section.room && section.room._id === selectedRoom._id);
-      this.convertSectionsToEvents(filteredEvents);
+      this.setState({ selectedRoom: selectedRoom }, () =>
+        this.populateEvents()
+      );
     }
     else {
-      this.setState({ selectedRoom: null });
-      this.convertSectionsToEvents(this.state.sections);
+      this.setState({ selectedRoom: null }, () =>
+        this.populateEvents()
+      );
     }
-
   };
 
   handleProfessorSelect = (selectedProfessor) => {
     if (selectedProfessor?._id) {
-      this.setState({ selectedProfessor: selectedProfessor });
-      const filteredEvents = this.state.sections.filter((section) => section.instructor && section.instructor._id === selectedProfessor._id);
-      this.convertSectionsToEvents(filteredEvents);
+      this.setState({ selectedProfessor: selectedProfessor }, () =>
+        this.populateEvents()
+      );
     }
     else {
-      this.setState({ selectedProfessor: null });
-      this.convertSectionsToEvents(this.state.sections);
+      this.setState({ selectedProfessor: null }, () =>
+        this.populateEvents());
     }
   };
 
   handleCourseSelect = (selectedCourse) => {
     if (selectedCourse?._id) {
-      this.setState({ selectedCourse: selectedCourse });
-      const filteredEvents = this.state.sections.filter((section) => section.course && section.course._id === selectedCourse._id);
-      this.convertSectionsToEvents(filteredEvents);
+      this.setState({ selectedCourse: selectedCourse }, () =>
+        this.populateEvents());
     }
     else {
-      this.setState({ selectedCourse: null });
-      this.convertSectionsToEvents(this.state.sections);
+      this.setState({ selectedCourse: null }, () =>
+        this.populateEvents());
     }
+
   };
 
   handleYearSelect = (selectedYear) => {
@@ -131,15 +132,37 @@ class CalendarComponent extends Component {
         return section;
       });
 
-      this.convertSectionsToEvents(sectionData);
+      this.setState({ sections: sectionData });
+
+      this.populateEvents();
     } catch (error) {
       console.error('Error fetching section data:', error);
     }
   }
 
-  convertSectionsToEvents(sectionData) {
-    if (sectionData) {
-      const formattedEvents = sectionData.map((section) => {
+  populateEvents() {
+    let sections = this.state.sections;
+
+    // Apply room filter
+    if (this.state.selectedRoom?._id) {
+      sections = sections.filter((section) => section.room && section.room._id === this.state.selectedRoom._id);
+      console.log("apply room filter: ", sections);
+    }
+
+    // Apply professor filter
+    if (this.state.selectedProfessor?._id) {
+      sections = sections = sections.filter((section) => section.instructor && section.instructor._id === this.state.selectedProfessor._id);
+      console.log("apply professor filter: ", sections);
+    }
+
+    // Apply course filter
+    if (this.state.selectedCourse?._id) {
+      sections = sections = sections.filter((section) => section.course && section.course._id === this.state.selectedCourse._id);
+      console.log("apply course filter: ", sections);
+    }
+
+    if (sections) {
+      const formattedEvents = sections.map((section) => {
         const { sectionNumber, schedule, course, instructor, room } = section;
 
         if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
