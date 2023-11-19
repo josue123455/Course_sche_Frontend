@@ -4,9 +4,9 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
 import withDragAndDrop from 'react-big-calendar/lib/addons/dragAndDrop';
 import './CalendarStyles.css';
-import EventEditModal from './EventEditModal';
+import EventEditModal from './EventEditModal'; // Adjust the path accordingly
 import RoomDropdown from './roomdropdown';
-import ProfessorDropdown from './professordropdown.js';
+import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown.js';
 import YearSemesterToolbar from './YearSemesterToolbar';
 import { Link } from 'react-router-dom';
@@ -31,6 +31,7 @@ class CalendarComponent extends Component {
       selectedCourse: null,
       selectedYear: null,
       selectedSemester: null,
+      isEventEditModalOpen: false,// props for if the event is not being edited dont show the form 
     };
   }
 
@@ -53,7 +54,7 @@ class CalendarComponent extends Component {
   };
 
   handleEventSelect = (event) => {
-    this.setState({ selectedEvent: event });
+    this.setState({ selectedEvent: event, isEventEditModalOpen: true });
   };
 
   handleEventEdit = (updatedEvent) => {
@@ -62,7 +63,7 @@ class CalendarComponent extends Component {
         ? updatedEvent
         : existingEvent
     );
-    this.setState({ events: updatedEvents, selectedEvent: null });
+    this.setState({ events: updatedEvents, selectedEvent: null, isEventEditModalOpen: false });
   };
 
   handleRoomSelect = (selectedRoom) => {
@@ -212,6 +213,7 @@ class CalendarComponent extends Component {
               events={this.state.events}
               defaultView="week"
               views={['week']}
+              
               components={{
                 toolbar: () => (
                   <>
@@ -248,9 +250,16 @@ class CalendarComponent extends Component {
         </div>
         {this.state.selectedEvent && (
           <EventEditModal
-            event={this.state.selectedEvent}
+            rooms={this.state.rooms}
+            instructors={this.state.professors}
+            sections={this.state.sections}
+            courses={this.state.courses}
+            section={this.state.selectedEvent}
             onClose={() => this.setState({ selectedEvent: null })}
             onSave={this.handleEventEdit}
+            isOpen={this.state.isEventEditModalOpen}
+
+            
           />
         )}
       </div>
@@ -272,6 +281,7 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
       </div>
       {/* <div className="rbc-toolbar-label">Entire Calendar View </div> */}
     </div>
+    
   );
 };
 
