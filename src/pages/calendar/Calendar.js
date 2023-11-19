@@ -150,31 +150,27 @@ class CalendarComponent extends Component {
       // convert this.state.selectedYear to number
       const year = parseInt(this.state.selectedYear);
       sections = sections.filter((section) => section.year === year);
-      console.log("apply year filter: ", sections);
     }
 
     // Apply semester filter
     if (this.state.selectedSemester) {
-      sections = sections.filter((section) => section.semester === this.state.selectedSemester);
-      console.log("apply semester filter: ", sections);
+      // to lowercase and trim
+      sections = sections.filter((section) => section.semester?.toLowerCase()?.trim() === this.state.selectedSemester.toLowerCase().trim());
     }
 
     // Apply room filter
     if (this.state.selectedRoom?._id) {
       sections = sections.filter((section) => section.room && section.room._id === this.state.selectedRoom._id);
-      console.log("apply room filter: ", sections);
     }
 
     // Apply professor filter
     if (this.state.selectedProfessor?._id) {
       sections = sections = sections.filter((section) => section.instructor && section.instructor._id === this.state.selectedProfessor._id);
-      console.log("apply professor filter: ", sections);
     }
 
     // Apply course filter
     if (this.state.selectedCourse?._id) {
       sections = sections = sections.filter((section) => section.course && section.course._id === this.state.selectedCourse._id);
-      console.log("apply course filter: ", sections);
     }
 
     if (sections) {
@@ -274,7 +270,7 @@ const CustomToolbar = ({ onRoomSelect, onSelectProfessor, onSelectCourse }) => {
           </label>
         </div>
       </div>
-      <div className="rbc-toolbar-label">Entire Calendar View </div>
+      {/* <div className="rbc-toolbar-label">Entire Calendar View </div> */}
     </div>
   );
 };
