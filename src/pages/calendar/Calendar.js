@@ -254,7 +254,7 @@ class CalendarComponent extends Component {
             instructors={this.state.professors}
             sections={this.state.sections}
             courses={this.state.courses}
-            section={this.state.selectedEvent}
+            section={this.state.sections.find((section) => section._id === this.state.selectedEvent.id)}
             onClose={() => this.setState({ selectedEvent: null })}
             onSave={this.handleEventEdit}
             isOpen={this.state.isEventEditModalOpen}

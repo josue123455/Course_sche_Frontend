@@ -2,14 +2,14 @@ import React from 'react';
 import ProfessorDropdown from './professordropdown';
 import CoursenumberDropdown from './coursenumberdropdown';
 import RoomDropdown from './roomdropdown';
-import SectionDropdown from './sectionDropdown';
-const { getCourse, getFaculty, getRoom, updateSection } = require('../../functions/http')
+// import SectionDropdown from './sectionDropdown';
+const { updateSection } = require('../../functions/http')
 
 
 class EventEditModal extends React.Component {
   constructor(props) {
     super(props);
-    console.log("props", this.props )
+    // console.log("props", this.props)
     const { instructors, rooms, courses } = this.props
     this.defaultState = {
       showForm: true, // State to control form visibility
@@ -41,12 +41,12 @@ class EventEditModal extends React.Component {
     this.state = structuredClone(this.defaultState);
   }
 
-  async componentDidMount() {
-    if (this.props.event) {
-      console.log("event", this.props.event)
-      // this.handleSectionChange(this.props.selectedEvent);
+  componentDidMount() {
+    if (this.props.section) {
+      this.handleSectionChange(this.props.section);
     }
   }
+
 
   // Function to handle form input changes
   handleInputChange = (event) => {
@@ -102,8 +102,7 @@ class EventEditModal extends React.Component {
   };
 
   handleSectionChange = (section) => {
-    // console.log("section: ", section);
-    console.log("Selected Section: ", section);
+    // console.log("Selected Section: ", section);
 
     // if a day is in section.schedule, set the day to true
     const selectedDays = {
@@ -131,7 +130,7 @@ class EventEditModal extends React.Component {
       endDate: section.endDate?.split('T')[0],
       days: selectedDays,
     });
-    console.log("Updated State: ", this.state);
+    // console.log("Updated State: ", this.state);
 
   }
 
@@ -142,7 +141,7 @@ class EventEditModal extends React.Component {
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
-            <div className="form-group">
+            {/* <div className="form-group">
               <label className="form-label">Section ID:</label>
               <SectionDropdown
                 onSelectSection={this.handleSectionChange}
@@ -150,7 +149,7 @@ class EventEditModal extends React.Component {
                 instructors={this.state.instructors}
                 rooms={this.state.rooms}
               />
-            </div>
+            </div> */}
             <div className="form-group">
               <label htmlFor='sectionNumber' className="form-label">Section Number:</label>
               <input
