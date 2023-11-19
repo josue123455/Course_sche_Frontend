@@ -29,8 +29,8 @@ class CalendarComponent extends Component {
       selectedRoom: null,
       selectedProfessor: null,
       selectedCourse: null,
-      selectedYear: '',
-      selectedSemester: '',
+      selectedYear: null,
+      selectedSemester: null,
     };
   }
 
@@ -104,13 +104,15 @@ class CalendarComponent extends Component {
   };
 
   handleYearSelect = (selectedYear) => {
-    this.setState({ selectedYear: selectedYear });
-    // Perform actions based on the selected year, e.g., fetch data
+    this.setState({ selectedYear: selectedYear }, () =>
+      this.populateEvents()
+    );
   };
 
   handleSemesterSelect = (selectedSemester) => {
-    this.setState({ selectedSemester: selectedSemester });
-    // Perform actions based on the selected semester, e.g., fetch data
+    this.setState({ selectedSemester: selectedSemester }, () =>
+      this.populateEvents()
+    );
   };
 
   async componentDidMount() {
@@ -142,6 +144,20 @@ class CalendarComponent extends Component {
 
   populateEvents() {
     let sections = this.state.sections;
+
+    // Apply year filter
+    if (this.state.selectedYear) {
+      // convert this.state.selectedYear to number
+      const year = parseInt(this.state.selectedYear);
+      sections = sections.filter((section) => section.year === year);
+      console.log("apply year filter: ", sections);
+    }
+
+    // Apply semester filter
+    if (this.state.selectedSemester) {
+      sections = sections.filter((section) => section.semester === this.state.selectedSemester);
+      console.log("apply semester filter: ", sections);
+    }
 
     // Apply room filter
     if (this.state.selectedRoom?._id) {
@@ -190,7 +206,7 @@ class CalendarComponent extends Component {
       <div style={{ marginLeft: '10px', display: 'flex', justifyContent: 'space-between' }}>
         <div>
           <Link to="../InputData">
-            <button>Go to InputData</button>
+            <button>Go to Data Editor</button>
           </Link>
         </div>
         <div className="calendar-container" style={{ marginLeft: '100px', flex: '1' }}>
