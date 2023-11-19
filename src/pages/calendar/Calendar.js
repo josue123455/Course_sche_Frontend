@@ -127,21 +127,14 @@ class CalendarComponent extends Component {
         return section;
       });
 
-
-
       if (sectionData) {
-
-        console.log(sectionData);
         const formattedEvents =
           sectionData.map((section) => {
             const { sectionNumber, schedule, course, instructor, room } = section;
 
             if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
 
-              const title = `${sectionNumber} - 
-                                        ${course ? course.subject + ' ' + course.courseNumber : ''} - 
-                                        ${instructor ? instructor.name : ''} - 
-                                        ${room ? room.building + ' ' + room.number : ''}`;
+              const title = `${sectionNumber} - ${course ? course.subject + ' ' + course.courseNumber : ''} - ${instructor ? instructor.name : ''} - ${room ? room.building + ' ' + room.number : ''}`;
 
               const event = {
                 id: section._id,
