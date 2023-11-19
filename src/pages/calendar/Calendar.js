@@ -258,7 +258,6 @@ class CalendarComponent extends Component {
             onClose={() => this.setState({ selectedEvent: null })}
             onSave={this.handleEventEdit}
             isOpen={this.state.isEventEditModalOpen}
-
             
           />
         )}
