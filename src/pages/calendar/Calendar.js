@@ -20,7 +20,12 @@ class CalendarComponent extends Component {
     super(props);
 
     this.state = {
+      eventBase: [],
       events: [],
+      sections: [],
+      courses: [],
+      professors: [],
+      rooms: [],
       selectedEvent: null,
       selectedRoom: null,
       selectedProfessor: null,
@@ -103,51 +108,63 @@ class CalendarComponent extends Component {
     // Perform actions based on the selected semester, e.g., fetch data
   };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData = async () => {
+  async componentDidMount() {
     try {
-      const sectionData = await getSection();
+      let sectionData = await getSection();
+      const courseData = await getCourse();
+      const facultyData = await getFaculty();
+      const roomData = await getRoom();
+
+      this.setState({ sections: sectionData });
+      this.setState({ courses: courseData });
+      this.setState({ professors: facultyData });
+      this.setState({ rooms: roomData });
+
+      sectionData = sectionData.map((section) => {
+        section.instructor = facultyData.find((faculty) => faculty._id === section.instructor);
+        section.course = courseData.find((course) => course._id === section.course);
+        section.room = roomData.find((room) => room._id === section.room);
+        return section;
+      });
+
+
 
       if (sectionData) {
-        const formattedEvents = await Promise.all(sectionData.map(async (section) => {
-          const { sectionNumber, schedule, course, instructor, room } = section;
 
-          if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
-            const courseId = course?.$oid;
-            const instructorId = instructor?.$oid;
-            const roomId = room?.$oid;
+        console.log(sectionData);
+        const formattedEvents =
+          sectionData.map((section) => {
+            const { sectionNumber, schedule, course, instructor, room } = section;
 
-            const [fetchedCourse, fetchedInstructor, fetchedRoom] = await Promise.all([
-              getCourse(courseId),
-              getFaculty(instructorId),
-              roomId ? getRoom(roomId) : null,  // Fetch room only if roomId is present
-            ]);
+            if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
 
-            const title = `${sectionNumber} - ${fetchedCourse ? fetchedCourse.subject + ' ' + fetchedCourse.courseNumber : ''} - ${fetchedInstructor ? fetchedInstructor.name : ''} - ${fetchedRoom ? fetchedRoom.name : ''}`;
+              const title = `${sectionNumber} - 
+                                        ${course ? course.subject + ' ' + course.courseNumber : ''} - 
+                                        ${instructor ? instructor.name : ''} - 
+                                        ${room ? room.building + ' ' + room.number : ''}`;
 
-            const event = {
-              id: section._id,
-              title: title,
-              start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
-              end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
-            };
-            return event;
-          }
+              const event = {
+                id: section._id,
+                title: title,
+                start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
+                end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
+              };
+              return event;
+            }
 
-          return null;
-        }));
+            return null;
+          });
 
         const filteredEvents = formattedEvents.filter(event => event !== null);
+        this.setState({ eventBase: filteredEvents });
         this.setState({ events: filteredEvents });
+        console.log(this.state.events);
       }
     } catch (error) {
       console.error('Error fetching section data:', error);
       // Handle errors
     }
-  };
+  }
 
   render() {
     return (
