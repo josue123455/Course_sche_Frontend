@@ -1,3 +1,4 @@
+// all of the import statments for the 
 import React from 'react';
 import Nav from 'react-bootstrap/Nav';
 import Tab from 'react-bootstrap/Tab';
@@ -15,14 +16,14 @@ import UpdateSectionButton from '../calendar/sectionUpdateButton.js';
 import DeleteSectionbutton from '../calendar/sectionDeleteButton.js';
 
 class InputData extends React.Component {
-  //using state we render on the active tab of professor since it is the first tab
+  //tehe constructor where the intial state is set to professor since this this is the first tab that is shown
   constructor(props) {
     super(props);
     this.state = {
       activeTab: 'professor',
     };
   }
-// handle the change of the tab and make the one that is selected the active tab it basicly changes the state of the current tab and resets the state of the other tabs so that the expanded buttons in the other tabs are closed
+//handle tab change method(since associated with the class personal notes) when a tab is clicked the method is called and setting the active tab to the selected tab and triggers a re-render
   handleTabChange = (selectedTab) => {
     this.setState({
       activeTab: selectedTab,
@@ -35,6 +36,7 @@ class InputData extends React.Component {
     } = this.state;
 
     return (
+        //the component uses tge tab container from the react bootstrap library  the nav key is used to create navigation tabs and each nav item represents a tab the event key prop is used to the coresponding tab key for the tab
       <Tab.Container id="data-tabs" activeKey={activeTab} onSelect={this.handleTabChange}>
         <Nav variant="tabs">
           <Nav.Item>
@@ -83,6 +85,7 @@ class InputData extends React.Component {
                 )}
               </div>
             </div>
+            {/* inside each tab pane there is conditonal rendering buttions based on the active tab this ensures that the buttions for the current tab are being displayed */}
           </Tab.Pane>
           <Tab.Pane eventKey="room">
             <div className='card'>
