@@ -190,7 +190,7 @@ class CalendarComponent extends Component {
 
         if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
           const title = `${sectionNumber} - ${course ? course.subject + ' ' + course.courseNumber : ''} - ${instructor ? instructor.name : ''} - ${room ? room.building + ' ' + room.number : ''}`;
-
+//return all fo the info and use it to map it to the calander and display it 
           return schedule.map((day) => {
             const event = {
               id: section._id,
@@ -252,7 +252,7 @@ class CalendarComponent extends Component {
             />
           </div>
         </div>
-        <div style={{ marginRight: '10px' }}>
+        <div style={{ marginRight: '1px' }}>
           <YearSemesterToolbar
             onSelectYear={this.handleYearSelect}
             onSelectSemester={this.handleSemesterSelect}
