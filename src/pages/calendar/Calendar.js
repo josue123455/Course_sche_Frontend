@@ -185,21 +185,21 @@ class CalendarComponent extends Component {
     }
 
     if (sections) {
-      const formattedEvents = sections.map((section) => {
+      const formattedEvents = sections.flatMap((section) => {
         const { sectionNumber, schedule, course, instructor, room } = section;
 
         if (schedule && schedule.length > 0 && schedule[0].day && schedule[0].startTime && schedule[0].endTime) {
-
           const title = `${sectionNumber} - ${course ? course.subject + ' ' + course.courseNumber : ''} - ${instructor ? instructor.name : ''} - ${room ? room.building + ' ' + room.number : ''}`;
 
-          //TODO: fix only showing first day of schedule
-          const event = {
-            id: section._id,
-            title: title,
-            start: moment(`${schedule[0].day} ${schedule[0].startTime}`, 'dddd HH:mm').toDate(),
-            end: moment(`${schedule[0].day} ${schedule[0].endTime}`, 'dddd HH:mm').toDate(),
-          };
-          return event;
+          return schedule.map((day) => {
+            const event = {
+              id: section._id,
+              title: title,
+              start: moment(`${day.day} ${day.startTime}`, 'dddd HH:mm').toDate(),
+              end: moment(`${day.day} ${day.endTime}`, 'dddd HH:mm').toDate(),
+            };
+            return event;
+          });
         }
         return null;
       });
