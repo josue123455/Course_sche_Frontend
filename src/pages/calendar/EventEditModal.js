@@ -46,7 +46,11 @@ class EventEditModal extends React.Component {
       this.handleSectionChange(this.props.section);
     }
   }
-
+  componentDidUpdate(prevProps) {
+    if (this.props.section !== prevProps.section) {
+      this.handleSectionChange(this.props.section);
+      }
+      }
 
   // Function to handle form input changes
   handleInputChange = (event) => {
@@ -315,7 +319,7 @@ class EventEditModal extends React.Component {
               />
             </div>
 
-
+            
             <button type="submit" onClick={this.handleSubmit} className="btn btn-primary">Submit</button>
           </form>
         )}

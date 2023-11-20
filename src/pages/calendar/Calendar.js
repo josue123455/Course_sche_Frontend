@@ -54,7 +54,17 @@ class CalendarComponent extends Component {
   };
 
   handleEventSelect = (event) => {
-    this.setState({ selectedEvent: event, isEventEditModalOpen: true });
+   //this.setState({ selectedEvent: event, isEventEditModalOpen: true });
+   // when the user clicks on an event the form will eventeditmodel will open if they click on the event again then the eventedit model will be closed
+    if (this.state.selectedEvent?.id === event.id) {
+      this.setState({ selectedEvent: null, isEventEditModalOpen: false });
+    }
+    else {
+      this.setState({ selectedEvent: event, isEventEditModalOpen: true });
+    }
+
+
+
   };
 
   handleEventEdit = (updatedEvent) => {
