@@ -90,8 +90,9 @@ class EventEditModal extends React.Component {
         endDate: this.state.endDate,
         room: this.state.room,
       })) {
-      // Reset the form and hide it after submission
-      this.setState(structuredClone(this.defaultState));
+      // Reset the form and update the component after submission
+      //
+      window.location.reload();
     }
   };
 
@@ -141,7 +142,7 @@ class EventEditModal extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>Edit Event</button>
+        {/* <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>Edit Event</button> */}
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
