@@ -90,8 +90,9 @@ class EventEditModal extends React.Component {
         endDate: this.state.endDate,
         room: this.state.room,
       })) {
-      // Reset the form and hide it after submission
-      this.setState(structuredClone(this.defaultState));
+      // Reset the form and update the component after submission
+      //
+      window.location.reload();
     }
   };
 
