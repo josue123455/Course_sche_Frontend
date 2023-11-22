@@ -41,7 +41,7 @@ class UpdateSectionButton extends React.Component {
 
     async componentDidMount() {
         try {
-            if (!this.state.facultyData) {
+            if (!this.state.instructors) {
                 const facultyData = await getFaculty();
                 if (facultyData) {
                     this.setState({ instructors: facultyData });

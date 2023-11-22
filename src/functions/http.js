@@ -68,6 +68,23 @@ export const deleteSection = async (id) => {
   }
 }
 
+export const importSections = async (data) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/section/import`,
+      data
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 // *************************
 //
 //  Room related functions.
@@ -135,6 +152,23 @@ export const deleteRoom = async (id) => {
     return null;
   }
 };
+
+export const importRooms = async (data) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/room/import`,
+      data
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
 
 // *************************
 //
@@ -236,6 +270,23 @@ export const deleteFaculty = async (id) => {
   }
 };
 
+export const importFaculty = async (data) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/faculty/import`,
+      data
+    );
+
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
 
 // *************************
 // 
@@ -304,3 +355,19 @@ export const deleteCourse = async (id) => {
     return null;
   }
 };
+
+export const importCourses = async (data) => {
+  try {
+    const response = await axios.post(
+      `${process.env.REACT_APP_BACKEND_URL}/course/import`,
+      data
+    );
+    if (response.status === 200) {
+      return response.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
