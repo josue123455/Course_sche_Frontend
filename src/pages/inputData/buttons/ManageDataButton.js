@@ -1,4 +1,5 @@
 import React from 'react';
+import MigrateForm from './migrateForm.js'
 const { getCourse,
     getFaculty,
     getRoom,
@@ -17,6 +18,7 @@ class ManageDatatButton extends React.Component {
             instructors: [],
             rooms: [],
             sections: [],
+            status: "Upload Status: "
         };
     }
 
@@ -54,14 +56,16 @@ class ManageDatatButton extends React.Component {
         element.click();
     }
 
-    handleFileChange = async (e, uploadCallback) => {
+    handleFileChange = async (e, uploadCallback, dataType) => {
         const file = e.target.files[0];
         const reader = new FileReader();
         reader.onload = async (event) => {
             const data = JSON.parse(event.target.result);
             if (await uploadCallback(data)) {
-                window.location.reload();
+                this.setState({ status: dataType + " Upload Status: Success" });
             }
+            else
+                this.setState({ status: dataType + " Upload Status: Failed" });
         };
         reader.readAsText(file);
     }
@@ -69,6 +73,9 @@ class ManageDatatButton extends React.Component {
     render() {
         return (
             <div>
+                <div className="card-body">
+                    <p className="card-text">Download the current data as a JSON file.</p>
+                </div>
 
                 <div className="button-container card-body">
                     <button className="btn btn-dark" onClick={() => this.downloadData(this.state.courses, "courses.json")}>Download Courses</button>
@@ -83,25 +90,36 @@ class ManageDatatButton extends React.Component {
                     <button className="btn btn-dark" onClick={() => this.downloadData(this.state.sections, "sections.json")}>Download Sections</button>
                 </div>
 
+                <hr class="border border-primary" />
+
                 {/* create uploads for each collection */}
-                <div className="button-container card-body">
-                    <input type="file" id="courses" onChange={(e) => this.handleFileChange(e, importCourses)} />
-                    <label htmlFor="courses">Upload Courses</label>
+                <div className="card-body">
+                    <p className="card-text">Upload a JSON file to replace the current data.</p>
+                    <p className="card-header" >{this.state.status}</p>
                 </div>
                 <div className="button-container card-body">
-                    <input type="file" id="instructors" onChange={(e) => this.handleFileChange(e, importFaculty)} />
-                    <label htmlFor="instructors">Upload Instructors</label>
+                    <label className='form-label' htmlFor="courses">Upload Courses</label>
+                    <input type="file" id="courses" className='form-control' onChange={(e) => this.handleFileChange(e, importCourses, "Courses")} />
                 </div>
                 <div className="button-container card-body">
-                    <input type="file" id="rooms" onChange={(e) => this.handleFileChange(e, importRooms)} />
-                    <label htmlFor="rooms">Upload Rooms</label>
+                    <label className='form-label' htmlFor="instructors">Upload Instructors</label>
+                    <input type="file" id="instructors" className='form-control' onChange={(e) => this.handleFileChange(e, importFaculty, "Instructors")} />
                 </div>
                 <div className="button-container card-body">
-                    <input type="file" id="sections" onChange={(e) => this.handleFileChange(e, importSections)} />
-                    <label htmlFor="sections">Upload Sections</label>
+                    <label className='form-label' htmlFor="rooms">Upload Rooms</label>
+                    <input type="file" id="rooms" className='form-control' onChange={(e) => this.handleFileChange(e, importRooms, "Rooms")} />
+                </div>
+                <div className="button-container card-body">
+                    <label className='form-label' htmlFor="sections">Upload Sections. To be used only after all other data has been uploaded</label>
+                    <input type="file" id="sections" className='form-control' onChange={(e) => this.handleFileChange(e, importSections, "Sections")} />
                 </div>
 
+                <hr class="border border-primary" />
 
+
+                <div className="button-container card-body">
+                    <MigrateForm />
+                </div>
             </div>
         )
     }
