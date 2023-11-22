@@ -141,7 +141,7 @@ class EventEditModal extends React.Component {
   render() {
     return (
       <div className="button-container card-body">
-        <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>Edit Event</button>
+        {/* <button className="btn btn-dark" onClick={() => this.setState({ showForm: !this.state.showForm })}>Edit Event</button> */}
 
         {this.state.showForm && (
           <form onSubmit={this.handleSubmit}>
