@@ -41,22 +41,20 @@ class UpdateSectionButton extends React.Component {
 
     async componentDidMount() {
         try {
-            if (!this.state.instructors) {
-                const facultyData = await getFaculty();
-                if (facultyData) {
-                    this.setState({ instructors: facultyData });
-                    this.defaultState.instructors = facultyData;
-                }
-                const courseData = await getCourse();
-                if (courseData) {
-                    this.setState({ courses: courseData });
-                    this.defaultState.courses = courseData;
-                }
-                const roomData = await getRoom();
-                if (roomData) {
-                    this.setState({ rooms: roomData });
-                    this.defaultState.rooms = roomData;
-                }
+            const facultyData = await getFaculty();
+            if (facultyData) {
+                this.setState({ instructors: facultyData });
+                this.defaultState.instructors = facultyData;
+            }
+            const courseData = await getCourse();
+            if (courseData) {
+                this.setState({ courses: courseData });
+                this.defaultState.courses = courseData;
+            }
+            const roomData = await getRoom();
+            if (roomData) {
+                this.setState({ rooms: roomData });
+                this.defaultState.rooms = roomData;
             }
         } catch (error) {
             console.error('Error fetching faculty data:', error);
